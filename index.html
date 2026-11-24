@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Zulu Logistics | Leads Hunter</title>
+<link rel="icon" href="data:image/png;base64,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">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--ink:#0c1f3b;--muted:#5d6b80;--line:#e2e6ec;--brand:#0c1f3b;--brand2:#0c1f3b;--accent:#f28c28;--accent-d:#d9741a;--chip:#eef1f6}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+header{background:var(--brand);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:4px solid var(--accent)}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:64px;height:64px;border-radius:14px;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 2px 8px rgba(0,0,0,.35)}
+header h1{margin:0;font-size:20px;font-weight:650}
+header p{margin:2px 0 0;opacity:.8;font-size:13px}
+body{min-height:100vh;display:flex;flex-direction:column}
+main{padding:20px 24px;max-width:1600px;margin:0 auto;width:100%;flex:1}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+input,select{font:inherit;padding:7px 9px;border:1px solid #cfd4dc;border-radius:7px;background:#fff;color:var(--ink);min-width:120px}
+input[type=checkbox]{min-width:0}
+.check{flex-direction:row;align-items:center;gap:6px;color:var(--ink);font-weight:500;padding-bottom:8px}
+button{font:inherit;font-weight:600;padding:8px 16px;border-radius:7px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+button:hover:not(:disabled){background:var(--accent-d);border-color:var(--accent-d)}
+button.ghost{background:#fff;color:var(--brand);border-color:var(--brand)}
+button.ghost:hover:not(:disabled){background:var(--chip);color:var(--brand)}
+button:disabled{opacity:.5;cursor:default}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat{border-top:3px solid var(--accent)}
+.stat b{display:block;font-size:24px;font-variant-numeric:tabular-nums;color:var(--brand)}
+.stat span{font-size:12px;color:var(--muted)}
+#status{font-size:13px;color:var(--muted);margin-top:10px;min-height:18px}
+#status.err{color:#b42318}
+.tablewrap{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:10px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:var(--brand);color:#fff;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px}
+th:hover{background:#1b3359}
+td{padding:7px 10px;border-bottom:1px solid #f0f2f5;vertical-align:top}
+tr:hover td{background:#fafbfd}
+td.num{text-align:center;font-variant-numeric:tabular-nums}
+.co{font-weight:600}
+.sub{color:var(--muted);font-size:12px}
+.chip{display:inline-block;background:var(--chip);border-radius:20px;padding:2px 8px;font-size:12px;margin:1px 2px 1px 0;white-space:nowrap}
+.semi{background:#e1e8f3}.boxt{background:#fde9d5}
+a{color:var(--accent-d);font-weight:600}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+td select{min-width:110px;padding:4px 6px;font-size:12px}
+.muted{color:var(--muted)}
+.help{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tabs button{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+.tabs button:hover:not(:disabled){background:rgba(255,255,255,.12);border-color:#fff}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+footer{background:var(--brand);color:rgba(255,255,255,.8);text-align:center;padding:14px 24px;font-size:13px;border-top:4px solid var(--accent);margin-top:24px}
+footer b{color:var(--accent)}
+#lookupOut .kv{display:grid;grid-template-columns:180px 1fr;gap:4px 12px;margin-top:12px}
+#lookupOut .kv div:nth-child(odd){color:var(--muted)}
+
+/* header nav tabs */
+header{align-items:stretch}
+.brand{align-self:center}
+.seg{align-self:flex-end;display:flex;gap:4px;margin-bottom:-18px}
+.seg button{position:relative;display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px;border:0;border-radius:10px 10px 0 0;background:transparent;color:rgba(255,255,255,.62);font-size:14px;font-weight:600;letter-spacing:.01em;box-shadow:none;transition:color .15s,background .15s}
+.seg button svg{opacity:.8}
+.seg button:hover:not(:disabled){background:rgba(255,255,255,.06);color:#fff}
+.seg button::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:transparent;transition:background .15s}
+.seg button.on,.seg button.on:hover{background:var(--bg);color:var(--brand)}
+.seg button.on svg{color:var(--accent);opacity:1}
+.seg button.on::after{background:var(--accent)}
+[hidden]{display:none!important}
+/* panels */
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(12,31,59,.04),0 4px 16px rgba(12,31,59,.05);margin-bottom:16px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 22px 4px;border-left:4px solid var(--accent)}
+.panel-head h2{margin:0;font-size:17px;color:var(--brand)}
+.panel-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#1a7f4b;background:#e8f6ee;border-radius:20px;padding:5px 11px;white-space:nowrap}
+.live i{width:8px;height:8px;border-radius:50%;background:#22a861;box-shadow:0 0 0 3px rgba(34,168,97,.2)}
+.form{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;padding:16px 22px 18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.grow{margin-left:auto}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.form input,.form select{height:42px;padding:0 12px;border-radius:9px;font-size:14px}
+.range{display:flex;align-items:center;height:42px;border:1px solid #cfd4dc;border-radius:9px;background:#fff;overflow:hidden}
+.range:focus-within{outline:2px solid var(--accent);border-color:var(--accent)}
+.range input{border:0;height:40px;min-width:0;width:150px;outline:none!important}
+.range .arrow{color:var(--muted);padding:0 4px}
+.switch{display:inline-flex;flex-direction:row;align-items:center;gap:10px;height:42px;cursor:pointer;font-size:14px;color:var(--ink);font-weight:500}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch .track{width:40px;height:22px;border-radius:22px;background:#cfd4dc;position:relative;transition:.2s}
+.switch .knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:.2s}
+.switch input:checked+.track{background:var(--accent)}
+.switch input:checked+.track .knob{left:21px}
+.switch input:focus-visible+.track{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 26px;border-radius:9px;font-size:15px;box-shadow:0 2px 6px rgba(242,140,40,.35)}
+.panel #status{margin:0 22px 14px;padding:0;min-height:0}
+.panel #status:not(:empty){padding:9px 12px;border-radius:8px;background:#f2f5f9}
+.panel #status.err:not(:empty){background:#fdecea}
+.panel-foot{display:flex;gap:8px;align-items:flex-start;padding:11px 22px;background:#f8f9fb;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.5}
+.panel-foot svg{flex:none;margin-top:1px}
+.empty{text-align:center;color:var(--muted);padding:56px 20px}
+.empty svg{color:#b8c2d2}
+.empty h3{margin:12px 0 4px;color:var(--brand);font-size:16px}
+.empty p{margin:0;font-size:14px}
+@media(max-width:760px){.seg span{display:none}.field.grow{margin-left:0;width:100%}.field.grow button{width:100%}}
+
+.filters label{flex-direction:column;gap:6px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.filters label.switch{flex-direction:row;text-transform:none;letter-spacing:0;font-size:14px;font-weight:500;color:var(--ink)}
+.filters select{text-transform:none;letter-spacing:0;font-weight:400;min-width:140px}
+.filters .wide input{width:260px}
+.actions{display:flex;gap:8px}
+.actions button{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 16px;border-radius:9px}
+.panel-head p#count{font-weight:500}
+#lookupOut{padding:0 22px}#lookupOut:not(:empty){padding-bottom:20px}
+.st{display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:600;background:var(--chip)}.st.ok{background:#e8f6ee;color:#1a7f4b}.st.bad{background:#fdecea;color:#b42318}
+
+.tablepanel{margin-bottom:0}
+.tablepanel .tablewrap{border:0;border-radius:0;max-height:calc(100vh - 150px);min-height:320px}
+.tfoot{align-items:center}
+.tfoot .pager{margin-left:auto;white-space:nowrap;font-weight:600;color:var(--brand)}
+.tfoot button{height:32px;padding:0 14px;border-radius:8px;font-size:13px;white-space:nowrap}
+main{padding-bottom:16px}
+footer{margin-top:0}
+#tbl td:nth-child(3){min-width:210px}#tbl td:nth-child(4){min-width:200px}
+.segl{display:inline-flex;height:42px;border:1px solid #cfd4dc;border-radius:9px;overflow:hidden;background:#fff}
+.segl button{border:0;border-radius:0;background:#fff;color:var(--muted);padding:0 16px;font-size:14px;box-shadow:none}
+.segl button+button{border-left:1px solid #cfd4dc}
+.segl button:hover:not(:disabled){background:var(--chip);color:var(--brand)}
+.segl button.on,.segl button.on:hover{background:var(--brand);color:#fff}
+.pick{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pick button{justify-content:flex-start;text-align:left;display:flex;gap:10px;align-items:center}
+.note{margin-top:12px;padding:9px 12px;border-radius:8px;background:#fff4e8;color:#8a4b0f;font-size:13px}
+
+.prof{margin-top:16px;display:flex;flex-direction:column;gap:14px}
+.prof-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#fbfcfe,#fff)}
+.prof-id{display:flex;gap:14px;align-items:flex-start}
+.avatar{width:52px;height:52px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;flex:none;border-bottom:3px solid var(--accent)}
+.prof-id h3{margin:0;font-size:20px;color:var(--brand);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--brand);color:#fff}
+.tag.light{background:var(--chip);color:var(--brand)}
+.tag.accent{background:#fde9d5;color:#a4520e}
+.prof-actions{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(12,31,59,.06)}
+.prof-actions button,.prof-actions .btnlink{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:0;border-radius:0;background:#fff;color:var(--brand);font-size:12.5px;font-weight:600;text-decoration:none;box-shadow:none;transition:background .15s,color .15s}
+.prof-actions .btnlink{border-left:1px solid var(--line)}
+.prof-actions button:hover:not(:disabled),.prof-actions .btnlink:hover{background:var(--chip);color:var(--brand)}
+.prof-actions svg{color:var(--accent)}
+.prof-actions button.done,.prof-actions button.done:hover{background:#e3f5eb;color:#13703f}
+.prof-actions button.done svg{color:#13703f}
+.prof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.box{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+.box h4{margin:0 0 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px}
+.box h4 svg{color:var(--accent)}
+.crow{display:flex;gap:12px;padding:8px 0;border-top:1px solid #f0f2f5}
+.crow:first-of-type{border-top:0;padding-top:0}
+.cic{width:30px;height:30px;border-radius:8px;background:var(--chip);color:var(--brand);display:grid;place-items:center;flex:none}
+.clbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.cval{font-size:14px;margin-top:2px;word-break:break-word}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.tile{background:var(--chip);border-radius:9px;padding:10px 6px;text-align:center}
+.tile b{display:block;font-size:20px;color:var(--brand);font-variant-numeric:tabular-nums}
+.tile span{font-size:11px;color:var(--muted)}
+.tile:first-child{background:var(--brand)}.tile:first-child b{color:#fff}.tile:first-child span{color:rgba(255,255,255,.75)}
+.kv2{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;font-size:14px;align-items:start}
+.kv2>div:nth-child(odd){color:var(--muted);font-size:12px;font-weight:600;padding-top:3px}
+.htbl{width:100%;border-collapse:collapse;font-size:13px}
+.htbl th{position:static;background:#f4f6f9;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;cursor:default}
+.htbl th:hover{background:#f4f6f9}
+.htbl td{border-bottom:1px solid #f0f2f5}
+.st.pend{background:#fff4e0;color:#a4520e}
+
+.cp{cursor:pointer;border-radius:6px;padding:1px 5px;margin:-1px -5px;transition:background .15s,color .15s,box-shadow .15s}
+.cp:hover{background:#fff4e8;box-shadow:inset 0 0 0 1px #f5b77a}
+.cp.copied{background:#e3f5eb;color:#13703f;box-shadow:inset 0 0 0 1px #9fd9b8}
+.cp.copied::after{content:" ✓";font-weight:700}
+.tag.cp{margin:0;padding:3px 10px}
+.tag.cp:hover{background:#1b3359;box-shadow:inset 0 0 0 1px var(--accent)}
+.tag.cp.copied{background:#1a7f4b;color:#fff;box-shadow:none}
+.cp.flash{animation:cpflash .5s ease}
+@keyframes cpflash{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--brand);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;box-shadow:0 6px 20px rgba(12,31,59,.3);opacity:0;pointer-events:none;transition:.2s;z-index:50;border-left:4px solid #22a861}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.tiles.t3{grid-template-columns:repeat(3,1fr)}
+.sublbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 0 8px}
+.cargo{display:flex;flex-wrap:wrap;gap:6px}
+.cchip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;padding:4px 10px;border-radius:7px;background:#fff;border:1px solid var(--line);color:var(--brand)}
+.cchip svg{color:var(--accent)}
+
+.warn{margin:0 0 10px;padding:9px 12px;border-radius:8px;background:#fdecea;color:#8f1d15;font-size:13px;border-left:3px solid #d92d20}
+.inscols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.inscols{grid-template-columns:1fr}}
+.ihist{margin-top:16px}
+.ihist summary{cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);padding:6px 0}
+.ihist summary:hover{color:var(--accent-d)}
+.warn.soft{background:#fff4e0;color:#7a4510;border-left-color:#f28c28}
+footer .fsrc{font-size:12px;color:rgba(255,255,255,.55);max-width:1000px;margin:0 auto 8px;line-height:1.5}
+
+/* compact search bars */
+.panel-head{padding:12px 18px 0;align-items:center}
+.panel-head h2{font-size:15px}
+.panel-head p:not(#count){display:none}
+.panel-head p#count{font-size:12.5px;margin-top:1px}
+.live{font-size:11px;padding:3px 9px}
+.form{gap:12px;padding:10px 18px 14px}
+.field{gap:4px}
+.lbl,.filters label{font-size:10.5px}
+.form input,.form select{height:34px;padding:0 10px;border-radius:8px;font-size:13px}
+.range{height:34px;border-radius:8px}
+.range input{height:32px;width:132px;font-size:13px}
+.switch,.filters label.switch{height:34px;font-size:13px;gap:8px}
+.switch .track{width:34px;height:19px}
+.switch .knob{width:13px;height:13px}
+.switch input:checked+.track .knob{left:18px}
+button.primary{height:34px;padding:0 18px;font-size:14px;border-radius:8px;box-shadow:0 2px 5px rgba(242,140,40,.3)}
+.segl{height:34px;border-radius:8px}
+.segl button{padding:0 12px;font-size:13px}
+.filters .wide input{width:220px}
+.filters select{min-width:120px}
+.actions button{height:32px;padding:0 12px;font-size:13px}
+.panel #status:not(:empty){margin:0 18px 12px;padding:7px 10px;font-size:12.5px}
+.panel{margin-bottom:12px}
+.stats{gap:10px;margin-bottom:12px}
+.stat{padding:9px 12px}
+.stat b{font-size:20px}
+.stat span{font-size:11.5px}
+main{padding-top:14px}
+.tablepanel .tablewrap{max-height:calc(100vh - 110px)}
+
+/* compact header */
+header{padding:8px 20px}
+.brand{gap:11px}
+.brand img{width:40px;height:40px;border-radius:10px}
+header h1{font-size:17px}
+header p{font-size:12px;margin-top:1px}
+.seg{margin-bottom:-12px}
+.seg button{height:36px;padding:0 14px;font-size:13px;gap:7px;border-radius:8px 8px 0 0}
+.seg button svg{width:14px;height:14px}
+.seg button::after{left:10px;right:10px}
+
+.hint{padding:0 18px;font-size:12.5px;color:var(--muted)}
+.trust{display:flex;flex-wrap:wrap;gap:8px 22px;padding:8px 18px 14px;font-size:12.5px;font-weight:600;color:var(--brand)}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+.trust svg{color:#1a7f4b}
+#lookupOut{padding:0 18px}
+
+.guide{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px 16px;box-shadow:0 1px 2px rgba(12,31,59,.04)}
+.ghead h3{margin:0;font-size:16px;color:var(--brand)}
+.ghead p{margin:2px 0 14px;font-size:13px;color:var(--muted)}
+.gsteps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;counter-reset:g}
+.gstep{position:relative;border:1px solid var(--line);border-radius:12px;padding:14px;background:linear-gradient(180deg,#fbfcfe,#fff)}
+.gstep:not(:last-child)::after{content:"";position:absolute;right:-9px;top:30px;width:6px;height:6px;border-top:2px solid #c9d1dd;border-right:2px solid #c9d1dd;transform:rotate(45deg)}
+.gtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.gnum{width:26px;height:26px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;border-bottom:2px solid var(--accent)}
+.gic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#fde9d5;color:var(--accent-d)}
+.gstep h4{margin:0 0 4px;font-size:14px;color:var(--brand)}
+.gstep p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+.gtips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.gtip{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:#5b4a2e;background:#fff8ef;border:1px solid #fbe2c4;border-radius:10px;padding:10px 12px;line-height:1.5}
+.gtip svg{flex:none;color:var(--accent);width:17px;height:17px;margin-top:1px}
+@media(max-width:1100px){.gsteps{grid-template-columns:repeat(3,1fr)}.gstep::after{display:none}.gtips{grid-template-columns:1fr}}
+@media(max-width:700px){.gsteps{grid-template-columns:1fr}}
+#upd{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:14px;background:var(--brand);color:#fff;padding:10px 12px 10px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(12,31,59,.35);border-left:4px solid var(--accent);font-size:13.5px}
+#upd button{height:30px;padding:0 14px;font-size:13px;border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><img src="data:image/png;base64,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" alt="Zulu Logistics"><div><h1>Zulu Logistics <span style="color:var(--accent)">Leads Hunter</span></h1><p>New carrier authorities from FMCSA Motus, with company, phone, email, truck type and fleet size.</p></div></div>
+  <nav class="seg" aria-label="Views"><button id="tabFind" class="on"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z"/><circle cx="7" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg><span>Find New Carriers</span></button><button id="tabLook"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/><path d="M6 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M15 10h3M15 13h3"/></svg><span>Look up a Carrier</span></button></nav>
+</header>
+<main>
+
+<section id="findView">
+<div class="panel">
+  <div class="panel-head">
+    <div><h2 title="Choose how old the authority should be (or exact dates) to pull carriers with full contact and fleet details.">Search New Authorities</h2><p>Choose how old the authority should be (or exact dates) to pull carriers with full contact and fleet details.</p></div>
+    <span class="live"><i></i>Live FMCSA data</span>
+  </div>
+  <div class="form">
+    <div class="field"><span class="lbl">Authority age</span>
+      <select id="age">
+        <optgroup label="Days &amp; weeks">
+        <option value="d:0-2" selected>Brand new (0–2 days)</option>
+        <option value="d:0-7">This week (0–7 days)</option>
+        <option value="d:7-30">1–4 weeks old</option>
+        </optgroup>
+        <optgroup label="Months">
+        <option value="m:1-2">1–2 months old</option>
+        <option value="m:2-3">2–3 months old</option>
+        <option value="m:3-4">3–4 months old</option>
+        <option value="m:4-6">4–6 months old</option>
+        <option value="m:6-12">6–12 months old</option>
+        </optgroup>
+        <optgroup label="Years">
+        <option value="m:12-24">1–2 years old</option>
+        <option value="m:24-36">2–3 years old</option>
+        <option value="m:36-60">3–5 years old</option>
+        <option value="m:60-600">5+ years old</option>
+        </optgroup>
+        <optgroup label="Custom">
+        <option value="custom">Custom age (months)…</option>
+        <option value="dates">Custom dates</option>
+        </optgroup>
+      </select></div>
+    <div class="field" id="ageCustom" hidden><span class="lbl">Age in months</span>
+      <div class="range"><input type="number" id="ageMin" min="0" step="1" value="2" aria-label="Minimum months" style="width:70px"><span class="arrow">to</span><input type="number" id="ageMax" min="0" step="1" value="3" aria-label="Maximum months" style="width:70px"><span class="arrow" style="padding-right:10px">months</span></div></div>
+    <div class="field"><span class="lbl">Granted between</span>
+      <div class="range"><input type="date" id="from" aria-label="From date"><span class="arrow">→</span><input type="date" id="to" aria-label="To date"></div></div>
+    <div class="field"><span class="lbl">Authority type</span>
+      <select id="reason">
+        <option value="Granted">New authority (Granted)</option>
+        <option value="Reinstated">Reinstated</option>
+        <option value="both">Granted + Reinstated</option>
+      </select></div>
+    <div class="field"><span class="lbl">Brokers</span>
+      <label class="switch"><input type="checkbox" id="brokers"><span class="track"><span class="knob"></span></span><span class="swtxt">Include brokers</span></label></div>
+    <div class="field"><span class="lbl">Status today</span>
+      <label class="switch"><input type="checkbox" id="activeOnly" checked><span class="track"><span class="knob"></span></span><span class="swtxt">Still active only</span></label></div>
+    <div class="field grow"><span class="lbl">&nbsp;</span><button id="go" class="primary"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Find Carriers</span></button></div>
+  </div>
+  <div class="hint">Pick an authority age or exact dates. Leads Hunter pulls every new authority from FMCSA Motus and adds company, contacts, fleet and current status.</div>
+  <div class="trust"><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>250–300 new MCs a day</span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18 3v4.5h-4.5M6 21v-4.5h4.5"/></svg>Updated daily</span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18L12 4zM5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>Official FMCSA data</span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Still-active check</span></div>
+  <div id="status"></div>
+</div>
+<section id="empty" class="guide"><div class="ghead"><h3>How to find new carrier leads</h3><p>Follow these steps to build today’s call list.</p></div><div class="gsteps"><div class="gstep"><div class="gtop"><span class="gnum">1</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div><h4>Choose authority age</h4><p>Pick <b>Brand new (0–2 days)</b> for the freshest MCs, or months / years, or <b>Custom dates</b>.</p></div><div class="gstep"><div class="gtop"><span class="gnum">2</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span></div><h4>Set the options</h4><p>Keep <b>Still active only</b> on to skip suspended carriers. Turn on <b>Include brokers</b> only if you want them.</p></div><div class="gstep"><div class="gtop"><span class="gnum">3</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span></div><h4>Click Find Carriers</h4><p>Leads Hunter pulls every matching authority from FMCSA and adds contacts, fleet and status. A week takes a few seconds.</p></div><div class="gstep"><div class="gtop"><span class="gnum">4</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span></div><h4>Filter and call</h4><p>Filter by state, fleet size, truck type or trailer. Click any MC, phone or email to copy it, and set <b>Call status</b> as you go.</p></div><div class="gstep"><div class="gtop"><span class="gnum">5</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg></span></div><h4>Export to Excel</h4><p>Click <b>Excel</b> or <b>CSV</b> to download the filtered list for your team or CRM.</p></div></div><div class="gtips"><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>Search <b>Brand new</b> every morning and call within 24–48 hours, before other dispatchers do.</span></div><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span><b>1-truck owner-operators</b> are usually the best dispatch customers, so start with that fleet size.</span></div><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>“Likely trailer” is an estimate. Confirm the trailer type on the call.</span></div></div></section>
+
+<div id="results" hidden>
+  <div class="stats" id="stats"></div>
+  <div class="panel">
+    <div class="panel-head"><div><h2>Leads</h2><p id="count"></p></div>
+      <div class="actions"><button class="ghost" id="xlsx"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg><span>Excel</span></button><button class="ghost" id="csv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg><span>CSV</span></button></div></div>
+    <div class="form filters">
+      <div class="field wide"><span class="lbl">Search</span><input id="q" placeholder="Name, MC, DOT, phone, city…"></div>
+      <label>State<select id="fState"><option value="">All</option></select></label>
+      <label>Fleet size<select id="fSize"><option value="">All</option><option>1 truck</option><option>2-5 trucks</option><option>6+ trucks</option><option>0 / not listed</option></select></label>
+      <label>Truck type<select id="fType"><option value="">All</option><option>Semi (Tractor-Trailer)</option><option>Box / Straight Truck</option><option>Semi + Box Truck</option><option>Not specified</option><option>No truck listed</option></select></label>
+      <label>Likely trailer<select id="fEquip"><option value="">All</option><option>Dry Van</option><option>Reefer</option><option>Flatbed</option><option>Hopper / Dump</option><option>Car Hauler</option><option>Container</option><option>Livestock</option><option>Hotshot</option><option>Cargo Van</option></select></label>
+      <label>Call status<select id="fCall"><option value="">All</option></select></label>
+      <div class="field"><span class="lbl">Country</span><label class="switch"><input type="checkbox" id="fUS" checked><span class="track"><span class="knob"></span></span><span class="swtxt">US only</span></label></div>
+      <label>Authority age<select id="fAge">
+        <option value="">All ages</option>
+        <option value="d:0-7">0–7 days</option>
+        <option value="d:7-30">1–4 weeks</option>
+        <option value="m:1-2">1–2 months</option>
+        <option value="m:2-3">2–3 months</option>
+        <option value="m:3-6">3–6 months</option>
+        <option value="m:6-12">6–12 months</option>
+        <option value="m:12-24">1–2 years</option>
+        <option value="m:24-9999">2+ years</option>
+        <option value="custom">Custom (months)…</option>
+      </select></label>
+      <div class="field" id="fAgeCustom" hidden><span class="lbl">Months</span>
+        <div class="range"><input type="number" id="fAgeMin" min="0" value="2" style="width:56px" aria-label="Minimum months"><span class="arrow">to</span><input type="number" id="fAgeMax" min="0" value="3" style="width:56px" aria-label="Maximum months"></div></div>
+    </div>
+  </div>
+  <div class="panel tablepanel">
+    <div class="tablewrap" id="tw"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+    <div class="panel-foot tfoot"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Hover over Age to see the exact grant date. Call status is saved in this browser only. Excel export includes every detail.</span><span class="pager" id="pager"></span><button class="ghost" id="more" hidden>Load more</button></div>
+  </div>
+</div>
+</section>
+
+<section id="lookView" hidden>
+<div class="panel">
+  <div class="panel-head"><div><h2 title="Enter any USDOT or MC number. Click any number, name, phone, email or address to copy it.">Look up a Carrier</h2><p>Enter any USDOT or MC number to see the company, contacts, fleet and authority history. Click any number, name, phone, email or address to copy it.</p></div></div>
+  <div class="form">
+    <div class="field"><span class="lbl">Search by</span>
+      <select id="lkMode" style="min-width:170px">
+        <option value="auto">Auto-detect</option>
+        <option value="dot">DOT number</option>
+        <option value="mc">MC number</option>
+        <option value="phone">Phone number</option>
+        <option value="email">Email address</option>
+        <option value="name">Company name</option>
+      </select></div>
+    <div class="field" style="flex:1;max-width:420px"><span class="lbl" id="lkLbl">DOT, MC, phone, email or company name</span><input id="lk" placeholder="e.g. 6960618, MC463536 or Safequick Logistics"></div>
+    <div class="field"><span class="lbl">&nbsp;</span><button id="lkGo" class="primary"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Look Up</span></button></div>
+  </div>
+  <div class="hint">Enter a USDOT or MC number, a phone number, an email or a company name. If it matches more than one carrier, you’ll choose which one you meant.</div>
+  <div class="trust"><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span><b id="recCount">4.5M+</b> carrier records</span></span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18 3v4.5h-4.5M6 21v-4.5h4.5"/></svg>Updated daily</span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18L12 4zM5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>Official FMCSA data</span><span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></svg>Insurance &amp; BOC-3 included</span></div>
+  <div id="lookupOut"></div>
+</div>
+<section id="lkEmpty" class="guide"><div class="ghead"><h3>How to look up a carrier</h3><p>Find any carrier’s full profile in a few seconds.</p></div><div class="gsteps"><div class="gstep"><div class="gtop"><span class="gnum">1</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg></span></div><h4>Choose “Search by”</h4><p>Leave it on <b>Auto-detect</b>, or pick DOT, MC, phone, email or company name.</p></div><div class="gstep"><div class="gtop"><span class="gnum">2</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg></span></div><h4>Type what you have</h4><p>A DOT (<b>6960618</b>), MC (<b>MC463536</b>), phone (<b>(334) 500-0975</b>), email, or part of the company name.</p></div><div class="gstep"><div class="gtop"><span class="gnum">3</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span></div><h4>Click Look Up</h4><p>If more than one carrier matches, you’ll get a list to pick from, with city, trucks and status.</p></div><div class="gstep"><div class="gtop"><span class="gnum">4</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/><path d="M6 16c.6-1.6 1.7-2.3 3-2.3s2.4.7 3 2.3M15 10h3M15 13h3"/></svg></span></div><h4>Review the profile</h4><p>Contacts, fleet, cargo, insurance, BOC-3 agent and any <b>suspension warnings</b> appear on one card.</p></div><div class="gstep"><div class="gtop"><span class="gnum">5</span><span class="gic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></span></div><h4>Copy what you need</h4><p>Click any number, name, phone or email to copy it, or use <b>Copy all</b> for the full summary.</p></div></div><div class="gtips"><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>A red warning means FMCSA has served a suspension notice. Check it before signing the carrier.</span></div><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>No match by phone or email? The carrier may have changed it. Try the company name or DOT.</span></div><div class="gtip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><span>Use <b>SAFER</b> on the card for FMCSA’s official snapshot and older history.</span></div></div></section>
+</section>
+</main>
+<footer><div class="fsrc">Source: FMCSA Motus Authority History and Company Census (data.transportation.gov). Grants from June 2026 are complete; older ones come from records FMCSA carried into Motus. Roughly 250–300 new authorities a day — a week loads in seconds, several months can take a few minutes.</div><div>Powered by <b>Prohauls Services</b></div></footer>
+
+<script>
+const API='https://data.transportation.gov/resource/';
+const AUTH='yu5v-wbh6', CENSUS='az4n-8mr2';
+const CALL=['Not Called','No Answer','Voicemail','Call Back','Interested','Not Interested','Signed Up','Wrong Number'];
+const CN={genfreight:'General Freight',household:'Household Goods',metalsheet:'Metal/Coils',motoveh:'Motor Vehicles',drivetow:'Driveaway/Towaway',logpole:'Logs/Poles/Lumber',bldgmat:'Building Materials',mobilehome:'Mobile Homes',machlrg:'Machinery/Large Objects',produce:'Fresh Produce',liqgas:'Liquids/Gases',intermodal:'Intermodal Containers',passengers:'Passengers',oilfield:'Oilfield Equipment',livestock:'Livestock',grainfeed:'Grain/Feed/Hay',coalcoke:'Coal/Coke',meat:'Meat',garbage:'Garbage/Refuse',usmail:'US Mail',chem:'Chemicals',drybulk:'Dry Bulk',coldfood:'Refrigerated Food',beverages:'Beverages',paperprod:'Paper Products',utility:'Utilities',farmsupp:'Farm Supplies',construct:'Construction',waterwell:'Water Well',cargoothr:'Other'};
+const US_STATES=new Set('AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY PR'.split(' '));
+const $=id=>document.getElementById(id);
+let DATA=[], sortKey='size', sortDir=1; const PAGE=300; let shown=PAGE;
+
+// call status memory (this browser only)
+let memory={}; try{memory=JSON.parse(localStorage.getItem('motusCallStatus')||'{}')}catch(e){}
+const saveMem=()=>{try{localStorage.setItem('motusCallStatus',JSON.stringify(memory))}catch(e){}};
+
+// defaults: yesterday → today
+const iso=d=>d.toISOString().slice(0,10);
+const localISO=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)};
+const daysAgo=k=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-k);return localISO(d)};
+const MOTUS_START='2026-05-14';
+const monthsAgo=k=>{const d=new Date();d.setHours(12,0,0,0);const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()-k);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));return localISO(d)};
+function applyAge(){
+  const v=$('age').value; $('ageCustom').hidden=v!=='custom';
+  if(v==='dates') return;
+  let unit='m',mn,mx;
+  if(v==='custom'){mn=Math.max(0,parseFloat($('ageMin').value)||0);mx=Math.max(0,parseFloat($('ageMax').value)||0)}
+  else{[unit,v2]=v.split(':');[mn,mx]=v2.split('-').map(Number)}
+  if(mn>mx)[mn,mx]=[mx,mn];
+  const back=unit==='d'?daysAgo:monthsAgo;
+  $('from').value=mx>=600?'1980-01-01':back(mx); $('to').value=back(mn);
+}
+let v2;
+$('age').addEventListener('change',applyAge);
+['ageMin','ageMax'].forEach(id=>$(id).addEventListener('input',applyAge));
+['from','to'].forEach(id=>$(id).addEventListener('change',()=>{$('age').value='dates';$('ageCustom').hidden=true}));
+applyAge();
+
+const n=v=>parseInt(v,10)||0;
+const ymd=s=>s.replaceAll('-','');
+const fd=s=>s&&s.length===8?`${s.slice(4,6)}/${s.slice(6,8)}/${s.slice(0,4)}`:(s||'');
+// calendar age: "1 year 1 month", "3 months 12 days", "9 days"
+function ageMonths(s){
+  if(!s||s.length<8) return 0;
+  const g=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)), t=new Date(); t.setHours(0,0,0,0);
+  let m=(t.getFullYear()-g.getFullYear())*12+(t.getMonth()-g.getMonth()), d=t.getDate()-g.getDate();
+  if(d<0){m--; d+=new Date(t.getFullYear(),t.getMonth(),0).getDate();}
+  return m+d/31;
+}
+function ageLabel(s){
+  if(!s||s.length<8) return '';
+  const g=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)), t=new Date(); t.setHours(0,0,0,0);
+  if(g>t) return 'today';
+  let y=t.getFullYear()-g.getFullYear(), m=t.getMonth()-g.getMonth(), d=t.getDate()-g.getDate();
+  if(d<0){m--; d+=new Date(t.getFullYear(),t.getMonth(),0).getDate();}
+  if(m<0){y--; m+=12;}
+  const pl=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
+  if(y>0) return pl(y,'year')+(m?' '+pl(m,'month'):'');
+  if(m>0) return pl(m,'month')+(d?' '+pl(d,'day'):'');
+  return d===0?'today':pl(d,'day');
+}
+const phone=p=>{p=(p||'').replace(/\D/g,'');return p.length===10?`(${p.slice(0,3)}) ${p.slice(3,6)}-${p.slice(6)}`:p};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// click-to-copy
+const COPIED=new Set();
+const cp=(label,val=label,cls='')=>{val=String(val);return `<span class="cp ${cls}${COPIED.has(val)?' copied':''}" data-copy="${esc(val)}" title="Click to copy">${esc(label)}</span>`};
+let toastT;
+function toast(msg){let t=document.getElementById('toast'); if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t)}
+  t.innerHTML=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1600)}
+document.addEventListener('click',async e=>{const el=e.target.closest('.cp'); if(!el) return; e.preventDefault();
+  const v=el.dataset.copy;
+  try{await navigator.clipboard.writeText(v)}catch(_){const a=document.createElement('textarea');a.value=v;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(__){}a.remove()}
+  COPIED.add(v); document.querySelectorAll('.cp').forEach(x=>{if(x.dataset.copy===v)x.classList.add('copied')});
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  toast('<b>Copied</b> '+esc(v.length>40?v.slice(0,40)+'…':v));
+});
+const status=(t,err)=>{$('status').textContent=t;$('status').className=err?'err':''};
+
+// XHR instead of fetch: some browser extensions wrap fetch() and break on AbortSignal
+function xhrJSON(url,timeoutMs){
+  return new Promise((res,rej)=>{
+    const x=new XMLHttpRequest(); x.open('GET',url,true); x.timeout=timeoutMs; x.setRequestHeader('Accept','application/json');
+    x.onload=()=>{ if(x.status>=200&&x.status<300){ try{res(JSON.parse(x.responseText))}catch(e){rej(new Error('Bad data from FMCSA'))} }
+      else { const e=new Error('HTTP '+x.status); e.status=x.status; rej(e); } };
+    x.onerror=()=>rej(new Error('network error')); x.ontimeout=()=>rej(new Error('timed out'));
+    x.send();
+  });
+}
+async function getJSON(url,timeoutMs=30000,tries=4){
+  for(let i=0;i<tries;i++){
+    try{ return await xhrJSON(url,timeoutMs); }
+    catch(e){ if((e.status&&e.status<500&&e.status!==429)||i===tries-1) throw e; }
+    await new Promise(r=>setTimeout(r,1000*(i+1)));
+  }
+}
+
+function vehicle(c){
+  const trucks=n(c.owntruck)+n(c.trmtruck)+n(c.trptruck), tract=n(c.owntract)+n(c.trmtract)+n(c.trptract), pu=n(c.power_units);
+  let v= tract&&!trucks?'Semi (Tractor-Trailer)': trucks&&!tract?'Box / Straight Truck': trucks&&tract?'Semi + Box Truck': pu?'Not specified':'No truck listed';
+  return {v,trucks,tract,trail:n(c.owntrail)+n(c.trmtrail)+n(c.trptrail),pu};
+}
+function likely(c){
+  const s=new Set(Object.keys(c).filter(k=>k.startsWith('crgo_')&&c[k]==='X').map(k=>k.slice(5)));
+  const o=((c.crgo_cargoothr_desc||'')+' '+(c.legal_name||'')+' '+(c.dba_name||'')).toLowerCase(); const cats=[];
+  const has=(...a)=>a.some(x=>s.has(x)), any=(...a)=>a.some(x=>o.includes(x));
+  if(has('motoveh','drivetow')||any('car hauler','motor vehicle',' cars','towing')) cats.push('Car Hauler / Tow');
+  if(has('coldfood','meat','produce')||any('refrig')) cats.push('Reefer');
+  if(has('livestock')) cats.push('Livestock');
+  if(has('grainfeed','drybulk')||any('gravel','dirt','stone','aggregate','asphalt','rock')) cats.push('Hopper / Dump');
+  if(has('metalsheet','bldgmat','logpole','machlrg','construct','oilfield')||any('steel')) cats.push('Flatbed / Step-deck');
+  if(has('intermodal')) cats.push('Container (Drayage)');
+  if(has('usmail')) cats.push('US Mail');
+  if(has('genfreight')||any('general fr','amazon')) cats.push('Dry Van');
+  if(any('hotshot')) cats.unshift('Hotshot');
+  if(any('cargo van')) cats.unshift('Cargo Van');
+  const cargo=[...s].map(k=>CN[k]||k).join(', ')+(c.crgo_cargoothr_desc&&!/^(other|no)$/i.test(c.crgo_cargoothr_desc.trim())?` (${c.crgo_cargoothr_desc.trim()})`:'');
+  return {equip: !cats.length?'Not specified': cats.length>=5?'Mixed (many types filed)':cats.slice(0,3).join(', '), cargo};
+}
+
+async function run(){
+  const f=ymd($('from').value), t=ymd($('to').value);
+  if(!f||!t||f>t){status('Please pick a valid date range.',true);return}
+  $('go').disabled=true; $('results').hidden=true;
+  try{
+    status('Step 1 of 2: getting new authorities from Motus…');
+    const rsn=$('reason').value;
+    let where=`status_change_date between '${f}' and '${t}'`;
+    where+= rsn==='both'?` AND (upper(reason)='GRANTED' OR upper(reason)='REINSTATED')`:` AND upper(reason)='${rsn.toUpperCase()}'`;
+    if(!$('brokers').checked) where+=` AND op_auth_type like 'Motor Carrier of Property%'`;
+    else where+=` AND (op_auth_type like 'Motor Carrier of Property%' OR op_auth_type like 'Broker%')`;
+    const auth=await getJSON(`${API}${AUTH}.json?$limit=50000&$order=status_change_date DESC&$where=${encodeURIComponent(where)}`);
+    if(!auth.length){status('No new authorities found for these dates. Motus usually publishes the day\'s changes by evening.');$('go').disabled=false;return}
+    const dots=[...new Set(auth.map(a=>a.usdot_number))];
+    const dockets=[...new Set(auth.map(a=>a.docket_number))];
+    const total=dots.length+dockets.length;
+    if(dots.length>3000) status(`Found ${dots.length} authorities — this is a big range and may take a few minutes. Keep this page open.`);
+    const census={}, latest={}; let done=0; const failed=[];
+    const tasks=[];
+    for(let i=0;i<dots.length;i+=100) tasks.push({k:'c',ids:dots.slice(i,i+100)});
+    for(let i=0;i<dockets.length;i+=100) tasks.push({k:'s',ids:dockets.slice(i,i+100)});
+    const fetchTask=async t=>{
+      const list=t.ids.map(d=>`'${d}'`).join(',');
+      if(t.k==='c'){
+        const rows=await getJSON(`${API}${CENSUS}.json?$limit=1000&$where=${encodeURIComponent(`dot_number in(${list})`)}`);
+        rows.forEach(r=>census[r.dot_number]=r);
+      }else{
+        const rows=await getJSON(`${API}${AUTH}.json?$limit=5000&$order=status_change_date DESC&$where=${encodeURIComponent(`docket_number in(${list})`)}`);
+        rows.forEach(r=>{const L=latest[r.docket_number]; if(!L||r.status_change_date>L.status_change_date) latest[r.docket_number]=r});
+      }
+    };
+    const worker=async()=>{while(tasks.length){const t=tasks.shift();
+      try{await fetchTask(t)}catch(e){failed.push(t)}
+      done+=t.ids.length;
+      status(`Step 2 of 2: getting company details and current status… ${Math.round(Math.min(done,total)/total*100)}%`);}};
+    await Promise.all([worker(),worker(),worker(),worker(),worker()]);
+    for(const t of failed.splice(0)){ try{await fetchTask(t)}catch(e){failed.push(t)} }
+    const nowNoon=new Date(); nowNoon.setHours(12,0,0,0);
+    const ageOf=s=>Math.round((nowNoon-new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8),12))/86400000);
+    let all=auth.map(a=>{
+      const c=census[a.usdot_number]||{}; const veh=vehicle(c), lk=likely(c);
+      const size=veh.pu===1?'1 truck':veh.pu>=2&&veh.pu<=5?'2-5 trucks':veh.pu>=6?'6+ trucks':'0 / not listed';
+      const cell=c.cell_phone&&c.cell_phone!==c.phone?phone(c.cell_phone):'';
+      return {mc:a.docket_number,dot:a.usdot_number,reason:a.reason,authType:a.op_auth_type.startsWith('Broker')?'Broker':'Carrier',date:a.status_change_date,
+        name:c.legal_name||'',dba:c.dba_name||'',officer:c.company_officer_1||'',phone:phone(c.phone),cell,email:(c.email_address||'').toLowerCase(),
+        city:c.phy_city||'',state:c.phy_state||'',pu:veh.pu,tract:veh.tract,trucks:veh.trucks,trail:veh.trail,drivers:n(c.total_drivers),
+        vtype:veh.v,equip:lk.equip,cargo:lk.cargo,size,found:!!c.dot_number,age:ageOf(a.status_change_date),
+        now:(L=>L?L.op_auth_status:'Unknown')(latest[a.docket_number]),
+        nowWhy:(L=>L&&L.status_change_date>a.status_change_date?`${L.reason} (${fd(L.status_change_date)})`:'')(latest[a.docket_number])};
+    });
+    const inactive=all.filter(d=>d.now!=='Active'&&d.now!=='Unknown').length;
+    DATA=$('activeOnly').checked?all.filter(d=>d.now==='Active'||d.now==='Unknown'):all;
+    status('Building the list…'); await new Promise(r=>setTimeout(r,30));
+    shown=PAGE; buildFilters(); render(); $('results').hidden=false; $('empty').hidden=true;
+    const miss=DATA.filter(d=>!d.found).length;
+    const old=f<ymd(MOTUS_START)?' Note: grants before June 2026 come from records FMCSA carried over into Motus, so older periods can be less complete than recent ones.':'';
+    status(`Done: ${DATA.length} authorities found${inactive?` (${inactive} no longer active ${$('activeOnly').checked?'were removed':'are marked Inactive'})`:''}${miss?`, ${miss} without company details${failed.length?' (FMCSA did not answer for some — click Find carriers again to retry)':' yet (very new registrations)'}`:''}.`+old);
+  }catch(e){status('Could not reach FMCSA data ('+e.message+'). If this page is open inside a Claude preview, download the file and open it directly in Chrome. Otherwise check the internet connection, or try a Chrome Incognito window (an extension may be blocking it).',true)}
+  $('go').disabled=false;
+}
+
+function buildFilters(){
+  $('fAge').value=''; $('fAgeCustom').hidden=true;
+  const st=[...new Set(DATA.map(d=>d.state).filter(Boolean))].sort();
+  $('fState').innerHTML='<option value="">All</option>'+st.map(s=>`<option>${s}</option>`).join('');
+  $('fCall').innerHTML='<option value="">All</option>'+CALL.map(s=>`<option>${s}</option>`).join('');
+}
+const SIZE_ORDER={'1 truck':0,'2-5 trucks':1,'6+ trucks':2,'0 / not listed':3};
+function ageOk(d){
+  const v=$('fAge').value; if(!v) return true;
+  let unit='m',mn,mx;
+  if(v==='custom'){mn=Math.max(0,parseFloat($('fAgeMin').value)||0);mx=parseFloat($('fAgeMax').value);if(!isFinite(mx))mx=9999;}
+  else{const [u,r]=v.split(':');unit=u;[mn,mx]=r.split('-').map(Number);}
+  if(mn>mx)[mn,mx]=[mx,mn];
+  const x=unit==='d'?d.age:ageMonths(d.date);
+  return v==='custom'||unit==='m'?(x>=mn&&x<mx+(v==='custom'?1e-9:0)):(x>=mn&&x<=mx);
+}
+function filtered(){
+  const q=$('q').value.trim().toLowerCase(), S=$('fState').value, Z=$('fSize').value, T=$('fType').value, E=$('fEquip').value, C=$('fCall').value, us=$('fUS').checked;
+  let r=DATA.filter(d=>(!S||d.state===S)&&(!Z||d.size===Z)&&(!T||d.vtype===T)&&(!E||d.equip.includes(E))&&(!us||!d.state||US_STATES.has(d.state))
+    &&(!C||(memory[d.dot]||'Not Called')===C)&&ageOk(d)
+    &&(!q||[d.name,d.dba,d.mc,d.dot,d.phone,d.cell,d.email,d.city,d.officer].join(' ').toLowerCase().includes(q)));
+  const key=sortKey;
+  r.sort((a,b)=>{let x=a[key],y=b[key]; if(key==='size'){x=SIZE_ORDER[x];y=SIZE_ORDER[y]}
+    if(typeof x==='number') return (x-y)*sortDir; return String(x).localeCompare(String(y))*sortDir});
+  return r;
+}
+const COLS=[['#',null],['MC / DOT','mc'],['Company','name'],['Phone / Email','phone'],['Location','state'],['Trucks','pu'],['Fleet size','size'],['Age','age'],['Status now','now'],['Call status',null],['SAFER',null]];
+function render(){
+  const all=filtered(); const r=all.slice(0,shown);
+  $('tbl').querySelector('thead').innerHTML='<tr>'+COLS.map(([h,k])=>`<th data-k="${k||''}">${h}${k===sortKey?(sortDir>0?' ▲':' ▼'):''}</th>`).join('')+'</tr>';
+  $('tbl').querySelector('tbody').innerHTML=r.map((d,i)=>`<tr>
+    <td class="muted">${i+1}</td>
+    <td><b>${cp(d.mc)}</b><div class="sub">${cp('DOT '+d.dot,d.dot)}</div>${d.authType==='Broker'?'<span class="chip">Broker</span>':''}${!/^granted$/i.test(d.reason)?`<span class="chip">${esc(d.reason)}</span>`:''}</td>
+    <td><div class="co">${d.name?cp(d.name):'<span class="muted">—</span>'}</div>${d.dba?`<div class="sub">DBA ${esc(d.dba)}</div>`:''}${d.officer?`<div class="sub">${esc(d.officer)}</div>`:''}</td>
+    <td>${d.phone?cp(d.phone):''}${d.cell?`<div class="sub">Cell ${cp(d.cell)}</div>`:''}<div class="sub">${d.email?cp(d.email):''}</div></td>
+    <td>${esc(d.city)}${d.state?', '+esc(d.state):''}</td>
+    <td class="num"><b>${d.pu}</b></td>
+    <td>${esc(d.size)}</td><td style="white-space:nowrap" title="Granted ${fd(d.date)} · ${d.age} days">${ageLabel(d.date)}</td><td><span class="st ${d.now==='Active'?'ok':d.now==='Unknown'?'':'bad'}">${esc(d.now)}</span>${d.nowWhy?`<div class="sub">${esc(d.nowWhy)}</div>`:''}</td>
+    <td><select data-dot="${esc(d.dot)}">${CALL.map(c=>`<option${(memory[d.dot]||'Not Called')===c?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td><a href="https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=${encodeURIComponent(d.dot)}" target="_blank" rel="noopener">Open</a></td></tr>`).join('');
+  $('count').textContent=`${all.length} match the filters (of ${DATA.length} total)`+(all.length>r.length?` — showing first ${r.length}. Download Excel gets all ${all.length}.`:'');
+  $('more').hidden=all.length<=r.length; $('more').textContent=`Load ${Math.min(PAGE,all.length-r.length)} more`;
+  $('pager').textContent=`Showing ${r.length} of ${all.length}`+(all.length>r.length?' · scroll down for more':'');
+  const cnt=(f)=>all.filter(f).length;
+  $('stats').innerHTML=[[all.length,'Leads (filtered)'],[cnt(d=>d.phone),'With phone'],[cnt(d=>d.email),'With email'],[cnt(d=>d.size==='1 truck'),'Owner-operators (1 truck)'],
+    [cnt(d=>d.size==='2-5 trucks'),'Small fleets (2-5)'],[cnt(d=>d.vtype.startsWith('Semi')),'Semi trucks'],[cnt(d=>d.vtype.includes('Box')),'Box trucks'],
+    [cnt(d=>memory[d.dot]==='Signed Up'),'Signed up']].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join('');
+}
+function rowsForExport(){
+  return filtered().map(d=>({'MC Number':d.mc,'DOT Number':d.dot,'Company Name':d.name,'DBA Name':d.dba,'Owner / Officer':d.officer,'Phone':d.phone,'Cell Phone':d.cell,'Email':d.email,
+    'City':d.city,'State':d.state,'Total Trucks':d.pu,'Semi Tractors':d.tract,'Box / Straight Trucks':d.trucks,'Trailers':d.trail,'Drivers':d.drivers,'Truck Type':d.vtype,
+    'Likely Trailer / Freight':d.equip,'Fleet Size':d.size,'Cargo Filed':d.cargo,'Authority':/^granted$/i.test(d.reason)?'Granted':d.reason,'Type':d.authType,'Granted Date':fd(d.date),'Authority Age':ageLabel(d.date),'Authority Age (days)':d.age,'Status Today':d.now,'Status Note':d.nowWhy,'Call Status':memory[d.dot]||'Not Called','Notes':''}));
+}
+function stamp(){return `ZuluLogistics_Leads_${$('from').value}_to_${$('to').value}`}
+$('xlsx').onclick=()=>{
+  if(!window.XLSX){status('Excel library did not load; use Download CSV instead.',true);return}
+  const ws=XLSX.utils.json_to_sheet(rowsForExport());
+  ws['!cols']=[13,11,32,20,24,15,15,32,16,7,9,9,10,9,8,22,30,13,45,11,9,12,18,10,10,30,14,30].map(w=>({wch:w}));
+  ws['!autofilter']={ref:ws['!ref']}; ws['!freeze']={xSplit:3,ySplit:1};
+  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Leads'); XLSX.writeFile(wb,stamp()+'.xlsx');
+};
+$('csv').onclick=()=>{
+  const rows=rowsForExport(); if(!rows.length) return;
+  const h=Object.keys(rows[0]); const q=v=>`"${String(v??'').replace(/"/g,'""')}"`;
+  const csv=[h.map(q).join(','),...rows.map(r=>h.map(k=>q(r[k])).join(','))].join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'})); a.download=stamp()+'.csv'; a.click();
+};
+$('go').onclick=run;
+$('more').onclick=()=>{shown+=PAGE;render()};
+$('tw').addEventListener('scroll',e=>{const t=e.target; if(!$('more').hidden && t.scrollTop+t.clientHeight>t.scrollHeight-200){shown+=PAGE;render()}});
+$('fAge').addEventListener('change',()=>{$('fAgeCustom').hidden=$('fAge').value!=='custom'});
+['fAgeMin','fAgeMax'].forEach(id=>$(id).addEventListener('input',()=>{shown=PAGE;render()}));
+['q','fState','fSize','fType','fEquip','fCall','fUS','fAge'].forEach(id=>$(id).addEventListener(id==='q'?'input':'change',()=>{shown=PAGE;render()}));
+$('tbl').addEventListener('click',e=>{const th=e.target.closest('th'); if(!th||!th.dataset.k) return; const k=th.dataset.k; sortDir=k===sortKey?-sortDir:1; sortKey=k; render()});
+$('tbl').addEventListener('change',e=>{const s=e.target.closest('select[data-dot]'); if(!s) return; memory[s.dataset.dot]=s.value; saveMem(); render()});
+
+// tabs
+$('tabFind').onclick=()=>{$('findView').hidden=false;$('lookView').hidden=true;$('tabFind').className='on';$('tabLook').className=''};
+$('tabLook').onclick=()=>{$('findView').hidden=true;$('lookView').hidden=false;$('tabLook').className='on';$('tabFind').className=''};
+
+// single lookup
+let lkMode='auto';
+const LKH={auto:['DOT, MC, phone, email or company name','e.g. 6960618, MC463536 or Safequick Logistics'],dot:['USDOT number','e.g. 6960618'],mc:['MC number','e.g. 463536 or MC-463536'],phone:['Phone number','e.g. (334) 500-0975'],email:['Email address','e.g. name@company.com'],name:['Company name','e.g. Safequick Logistics']};
+$('lkMode').addEventListener('change',()=>{lkMode=$('lkMode').value;$('lkLbl').textContent=LKH[lkMode][0];$('lk').placeholder=LKH[lkMode][1];$('lk').focus()});
+async function pickCarrier(cands,what){
+  const out=$('lookupOut');
+  const names=await getJSON(`${API}${CENSUS}.json?$select=dot_number,legal_name,phy_city,phy_state&$where=${encodeURIComponent(`dot_number in(${cands.map(c=>`'${c.dot}'`).join(',')})`)}`);
+  const nm=Object.fromEntries(names.map(r=>[r.dot_number,r]));
+  out.innerHTML=`<div class="note">${esc(String(what).charAt(0).toUpperCase()+String(what).slice(1))} matches ${cands.length} carriers. Pick one:</div><div class="pick">`+cands.map(c=>`<button class="ghost" data-dot="${esc(c.dot)}"><b>${esc(c.via)}</b> — ${esc(nm[c.dot]?.legal_name||'DOT '+c.dot)} ${nm[c.dot]?.phy_state?'('+esc([nm[c.dot].phy_city,nm[c.dot].phy_state].filter(Boolean).join(', '))+')':''}</button>`).join('')+'</div>';
+  out.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>showCarrier(b.dataset.dot,`Found by ${what}`));
+}
+async function lookupName(val){
+  const out=$('lookupOut'); const nm=val.trim().replace(/\s+/g,' ');
+  if(nm.length<3){out.innerHTML='<p class="muted">Type at least 3 letters of the company name.</p>';return}
+  const U=nm.toUpperCase().replace(/'/g,"''"), sel='$select=dot_number,legal_name,dba_name,phy_city,phy_state,status_code,power_units';
+  const [a,b,c]=await Promise.all([
+    getJSON(`${API}${CENSUS}.json?${sel}&$where=${encodeURIComponent(`starts_with(upper(legal_name),'${U}')`)}&$limit=40`).catch(()=>[]),
+    getJSON(`${API}${CENSUS}.json?${sel}&$where=${encodeURIComponent(`starts_with(upper(dba_name),'${U}')`)}&$limit=20`).catch(()=>[]),
+    getJSON(`${API}${CENSUS}.json?${sel}&$q=${encodeURIComponent(nm)}&$limit=40`).catch(()=>[])]);
+  const seen=new Map(); [...a,...b,...c].forEach(r=>{if(!seen.has(r.dot_number))seen.set(r.dot_number,r)});
+  const words=nm.toUpperCase().split(' ');
+  const score=r=>{const L=(r.legal_name||'').toUpperCase(),D=(r.dba_name||'').toUpperCase();let s=0;
+    if(L===nm.toUpperCase()||D===nm.toUpperCase())s+=100; if(L.startsWith(nm.toUpperCase())||D.startsWith(nm.toUpperCase()))s+=50;
+    s+=words.filter(w=>L.includes(w)||D.includes(w)).length*10; if(r.status_code==='A')s+=5; return s};
+  const rows=[...seen.values()].filter(r=>score(r)>=10*Math.min(words.length,2)).sort((x,y)=>score(y)-score(x)).slice(0,25);
+  if(!rows.length){out.innerHTML=`<p class="muted">No carrier found named “${esc(nm)}”. Try fewer words, or the DOT/MC number.</p>`;return}
+  if(rows.length===1) return showCarrier(rows[0].dot_number,`Found by name “${nm}”`);
+  out.innerHTML=`<div class="note">${rows.length} carriers match “${esc(nm)}”. Pick one:</div><div class="pick">`+rows.map(r=>`<button class="ghost" data-dot="${esc(r.dot_number)}"><b>${esc(r.legal_name||'')}</b>${r.dba_name?`<span class="muted">DBA ${esc(r.dba_name)}</span>`:''}<span class="muted">· ${esc([r.phy_city,r.phy_state].filter(Boolean).join(', '))} · DOT ${esc(r.dot_number)} · ${n(r.power_units)} truck${n(r.power_units)===1?'':'s'}</span><span class="st ${r.status_code==='A'?'ok':'bad'}" style="margin-left:auto">${r.status_code==='A'?'Active':'Inactive'}</span></button>`).join('')+'</div>';
+  out.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>showCarrier(b.dataset.dot,`Found by name “${nm}”`));
+}
+async function lookupContact(kind,val){
+  const out=$('lookupOut'); let rows=[];
+  if(kind==='email'){
+    const em=val.trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){out.innerHTML='<p class="muted">Please enter a full email address, for example name@company.com.</p>';return}
+    rows=await getJSON(`${API}${CENSUS}.json?$select=dot_number&$where=${encodeURIComponent(`upper(email_address)='${em.toUpperCase().replace(/'/g,"''")}'`)}&$limit=25`);
+  }else{
+    let d=val.replace(/\D/g,''); if(d.length===11&&d[0]==='1') d=d.slice(1);
+    if(d.length!==10){out.innerHTML='<p class="muted">Please enter a 10-digit US phone number, for example (334) 500-0975.</p>';return}
+    const [a,b]=await Promise.all([getJSON(`${API}${CENSUS}.json?$select=dot_number&phone=${d}&$limit=25`),getJSON(`${API}${CENSUS}.json?$select=dot_number&cell_phone=${d}&$limit=25`)]);
+    rows=a.concat(b); val=phone(d);
+  }
+  const dots=[...new Set(rows.map(r=>r.dot_number))];
+  const what=(kind==='email'?'email ':'phone ')+val.trim();
+  if(!dots.length){out.innerHTML=`<p class="muted">No carrier found with ${esc(what)}. FMCSA only has the phone and email the carrier registered with.</p>`;return}
+  if(dots.length===1) return showCarrier(dots[0],`Found by ${what}`);
+  return pickCarrier(dots.map(d=>({dot:d,via:'DOT '+d})),what);
+}
+// MC number -> list of {dot, docket}
+async function dotsForMC(num,prefix){
+  const dk=prefix+num, found=new Map();
+  const [a,c1,c2]=await Promise.all([
+    getJSON(`${API}${AUTH}.json?$select=usdot_number&docket_number=${dk}&$limit=50`).catch(()=>[]),
+    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket1prefix=${prefix}&docket1=${num}&$limit=20`).catch(()=>[]),
+    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket2prefix=${prefix}&docket2=${num}&$limit=20`).catch(()=>[])]);
+  a.forEach(r=>found.set(r.usdot_number,dk)); c1.concat(c2).forEach(r=>found.set(r.dot_number,dk));
+  return [...found.keys()];
+}
+async function lookup(){
+  $('lkEmpty').hidden=true;
+  const typed=$('lk').value.trim(); const raw=typed.toUpperCase().replace(/[\s\-#:.]/g,''); const out=$('lookupOut'); if(!raw) return;
+  out.innerHTML='<p class="muted">Looking up…</p>';
+  try{
+    const digits=typed.replace(/\D/g,'');
+    if(lkMode==='email'||(lkMode==='auto'&&typed.includes('@'))) return await lookupContact('email',typed);
+    if(lkMode==='name'||(lkMode==='auto'&&/[A-Z]{2,}/i.test(typed.replace(/^(US\s*DOT|DOT|MC|FF|MX)[\s#:-]*\d+$/i,'')))) return await lookupName(typed);
+    if(lkMode==='phone'||(lkMode==='auto'&&!/^(MC|FF|MX|DOT|USDOT)/i.test(raw)&&(digits.length===10||(digits.length===11&&digits[0]==='1')||/[()]/.test(typed)))) return await lookupContact('phone',typed);
+    let m=raw.match(/^(USDOT|DOT)?0*(\d+)$/), p=raw.match(/^(MC|FF|MX)0*(\d+)$/);
+    let mode=lkMode; if(p) mode='mc'; else if(raw.startsWith('DOT')||raw.startsWith('USDOT')) mode='dot';
+    const num=p?p[2]:(m?m[2]:null), prefix=p?p[1]:'MC';
+    if(!num){out.innerHTML='<p class="muted">Please enter numbers only, for example 6960618 or MC463536.</p>';return}
+    let dotHits=[], mcHits=[];
+    if(mode!=='mc'){const c=await getJSON(`${API}${CENSUS}.json?$select=dot_number&dot_number=${num}`); if(c.length) dotHits=[num];
+      if(!c.length){const a=await getJSON(`${API}${AUTH}.json?$select=usdot_number&usdot_number=${num}&$limit=1`); if(a.length) dotHits=[num];}}
+    if(mode!=='dot') mcHits=await dotsForMC(num,prefix);
+    const cands=[...dotHits.map(d=>({dot:d,via:'DOT '+d})),...mcHits.filter(d=>!dotHits.includes(d)).map(d=>({dot:d,via:prefix+num}))];
+    if(!cands.length){out.innerHTML=`<p class="muted">Nothing found for ${esc(mode==='dot'?'DOT '+num:mode==='mc'?prefix+num:num)}. Check the number${mode==='auto'?'':' or change "Search by"'}.</p>`;return}
+    if(cands.length>1) return pickCarrier(cands,num);
+    await showCarrier(cands[0].dot, cands[0].via.startsWith('DOT')?'':`Found by ${cands[0].via}`);
+  }catch(e){out.innerHTML='<p style="color:#b42318">Could not reach FMCSA data. Try again.</p>'}
+}
+const IC={"phone": "<path d=\"M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2\"/>", "mail": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"m3 7 9 6 9-6\"/>", "pin": "<path d=\"M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/>", "user": "<circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6\"/>", "copy": "<rect x=\"9\" y=\"9\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M5 15V6a2 2 0 0 1 2-2h9\"/>", "ext": "<path d=\"M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5\"/>", "truck": "<path d=\"M3 6h11v9H3zM14 9h4l3 3v3h-7z\"/><circle cx=\"7\" cy=\"17\" r=\"1.8\"/><circle cx=\"17\" cy=\"17\" r=\"1.8\"/>", "box": "<path d=\"M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7M12 11v10\"/>", "doc": "<path d=\"M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>"};
+const ico=(k,s=16)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
+const stCls=s=>s==='Active'?'ok':s==='Pending'?'pend':s?'bad':'';
+async function copyText(t,btn){
+  try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}
+  btn.classList.add('done');btn.innerHTML=ico('copy',13)+'<span>Copied ✓</span>';if(typeof toast==='function')toast('<b>Copied</b> all carrier details');
+}
+async function showCarrier(dot,note=''){
+  const out=$('lookupOut'); out.innerHTML='<p class="muted">Loading carrier…</p>';
+  try{
+    const q=encodeURIComponent(dot), soft=u=>getJSON(u).catch(()=>null);
+    const [cs,auth,insNow,insHist,boc,revs]=await Promise.all([getJSON(`${API}${CENSUS}.json?dot_number=${q}`),getJSON(`${API}${AUTH}.json?$order=status_change_date DESC&usdot_number=${q}&$limit=50`),
+      soft(`${API}c5y8-a4uz.json?usdot_number=${q}&$order=effective_date DESC&$limit=20`),soft(`${API}3uet-3z4i.json?usdot_number=${q}&$order=effective_date DESC&$limit=60`),
+      soft(`${API}6snj-ed7q.json?usdot_number=${q}&$limit=5`),soft(`${API}wb4f-neki.json?usdot_number=${q}&$order=order1_serve_date DESC&$limit=20`)]);
+    const c=cs[0]||{}; const veh=vehicle(c), lk=likely(c);
+    const mcs=[...new Set([...auth.map(a=>a.docket_number),...[[c.docket1prefix,c.docket1],[c.docket2prefix,c.docket2]].filter(x=>x[0]&&x[1]).map(x=>x[0]+x[1])])];
+    const cur=auth[0]; const granted=auth.find(a=>/^granted$/i.test(a.reason));
+    const nowNoon=new Date();nowNoon.setHours(12,0,0,0);
+    const age=granted?Math.round((nowNoon-new Date(+granted.status_change_date.slice(0,4),+granted.status_change_date.slice(4,6)-1,+granted.status_change_date.slice(6,8),12))/86400000):null;
+    const ageTxt=granted?ageLabel(granted.status_change_date):'';
+    const addr=[c.phy_street,c.phy_city,c.phy_state,c.phy_zip].filter(Boolean).join(', ');
+    const ph=phone(c.phone), cell=c.cell_phone&&c.cell_phone!==c.phone?phone(c.cell_phone):'';
+    const dash='<span class="muted">—</span>';
+    const row=(icon,label,val)=>`<div class="crow"><span class="cic">${ico(icon)}</span><div><div class="clbl">${label}</div><div class="cval">${val||dash}</div></div></div>`;
+    const tile=(v,l)=>`<div class="tile"><b>${v}</b><span>${l}</span></div>`;
+    const summary=[c.legal_name,c.dba_name?'DBA '+c.dba_name:'',`DOT ${dot}`,mcs.length?'MC: '+mcs.join(', '):'',c.company_officer_1?'Owner: '+c.company_officer_1:'',ph?'Phone: '+ph:'',cell?'Cell: '+cell:'',c.email_address?'Email: '+c.email_address:'',addr?'Address: '+addr:'',`Trucks: ${veh.pu} (Semi ${veh.tract}, Box ${veh.trucks}, Trailers ${veh.trail})`,`Truck type: ${veh.v}`,`Likely trailer: ${lk.equip}`].filter(Boolean).join('\n');
+    const mkSummary=()=>summary+(nowIns.length?'\n'+nowIns.map(r=>`Insurance: ${insKind(r)} - ${r.insurance_company_name||''} - Policy ${r.policy_no||''} - ${money(r.max_cov_amount)} (eff. ${fd(r.effective_date)})`).join('\n'):'\nInsurance: none on file')+(bocA?`\nBOC-3: ${bocA.co_name}`:'');
+    const today=ymd(localISO(new Date()));
+    const insKind=r=>{const f=(r.ins_form_code||'').toUpperCase(),t=r.ins_type_code;
+      if(/BMC-9[1]|BMC-35/.test(f)||t==='1') return 'Liability (BIPD)'; if(/BMC-3[4]|BMC-83/.test(f)||t==='2') return 'Cargo'; if(/BMC-8[24]/.test(f)||t==='3') return 'Surety bond'; if(/BMC-85/.test(f)||t==='4') return 'Trust fund'; return r.ins_type_desc||f||'Other'};
+    const money=v=>{const x=parseFloat(v);return isFinite(x)&&x>0?'$'+x.toLocaleString('en-US',{maximumFractionDigits:0}):'—'};
+    const nowIns=(insNow||[]);
+    const histIns=[...new Map((insHist||[]).map(r=>[r.policy_no+'|'+r.effective_date+'|'+r.cancl_effective_date+'|'+r.ins_form_code,r])).values()]
+      .sort((a,b)=>(b.cancl_effective_date||'').localeCompare(a.cancl_effective_date||''));
+    const notices=(revs||[]).map(r=>({...r,upcoming:(r.order1_effective_date||'')>=today}));
+    const upcoming=notices.filter(r=>r.upcoming);
+    const bocA=(boc||[])[0];
+    const insRows=nowIns.map(r=>`<tr><td><b>${esc(insKind(r))}</b><div class="sub">${esc(r.ins_form_code||'')}</div></td><td>${r.insurance_company_name?cp(r.insurance_company_name):'—'}</td><td>${r.policy_no?cp(r.policy_no):'—'}</td><td><b>${money(r.max_cov_amount)}</b></td><td>${fd(r.effective_date)}</td></tr>`).join('');
+    const histRows=histIns.slice(0,10).map(r=>{const fut=(r.cancl_effective_date||'')>=today;return `<tr><td>${esc(insKind(r))}</td><td>${esc(r.insurance_company_name||'—')}</td><td>${esc(r.policy_no||'—')}</td><td>${money(r.max_cov_amount)}</td><td>${fd(r.effective_date)}</td><td>${r.cancl_effective_date?`${fd(r.cancl_effective_date)}${fut?' <span class="st pend">Scheduled</span>':''}`:'—'}</td><td>${esc(r.filing_status_reason||'')}</td></tr>`}).join('');
+    const insSection=`<section class="box"><h4>${ico('doc',15)} Insurance &amp; BOC-3</h4>
+      ${upcoming.length?(()=>{const r=upcoming[0];const fixed=nowIns.some(i=>(i.trans_date||'')>(r.order1_serve_date||''));return `<div class="warn${fixed?' soft':''}">⚠ <b>${esc(r.order1_type_desc)}</b> served ${fd(r.order1_serve_date)}, takes effect <b>${fd(r.order1_effective_date)}</b> unless the carrier fixes it (usually insurance or BOC-3).${fixed?' <b>New insurance was filed after this notice, so it may already be resolved.</b>':''}</div>`})():''}
+      <div class="sublbl">Insurance on file now</div>
+      ${nowIns.length?`<table class="htbl"><thead><tr><th>Type</th><th>Insurance company</th><th>Policy #</th><th>Coverage</th><th>Effective</th></tr></thead><tbody>${insRows}</tbody></table>`:'<div class="warn">No insurance on file with FMCSA right now.</div>'}
+      <div class="inscols">
+        <div><div class="sublbl" style="margin-top:16px">BOC-3 process agent</div>${bocA?`<div class="cval">${cp(bocA.co_name)}</div><div class="sub">${esc([bocA.street_po,bocA.city,bocA.state_code,bocA.zip_code].filter(Boolean).join(', '))}</div>`:'<div class="muted">No BOC-3 on file</div>'}</div>
+        <div><div class="sublbl" style="margin-top:16px">Revocation / suspension notices</div>${notices.length?notices.slice(0,5).map(r=>`<div class="cval" style="font-size:13px">${esc(r.order1_type_desc)} <span class="sub">· served ${fd(r.order1_serve_date)} · effective ${fd(r.order1_effective_date)}</span>${r.upcoming?' <span class="st bad">Upcoming</span>':''}</div>`).join(''):'<div class="muted">None on record</div>'}</div>
+      </div>
+      ${histRows?`<details class="ihist"><summary>Insurance history (${histIns.length})</summary><table class="htbl"><thead><tr><th>Type</th><th>Insurance company</th><th>Policy #</th><th>Coverage</th><th>Effective</th><th>Ended</th><th>Reason</th></tr></thead><tbody>${histRows}</tbody></table></details>`:''}
+    </section>`;
+    const safer=`https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=${encodeURIComponent(dot)}`;
+    out.innerHTML=(note?`<div class="note">${esc(note)}</div>`:'')+`
+    <div class="prof">
+      <div class="prof-head">
+        <div class="prof-id">
+          <div class="avatar">${esc((c.legal_name||'?').replace(/[^A-Z0-9 ]/gi,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('')||'?')}</div>
+          <div>
+            <h3>${esc(c.legal_name||'Unknown carrier')} ${cur?`<span class="st ${stCls(cur.op_auth_status)}">${esc(cur.op_auth_status)}</span>`:''}</h3>
+            ${c.dba_name?`<div class="sub">DBA ${esc(c.dba_name)}</div>`:''}
+            <div class="tags">${cp('DOT '+dot,dot,'tag')}${mcs.map(m=>cp(m,m,'tag')).join('')}${c.classdef?`<span class="tag light">${esc(c.classdef.replace(/;/g,' · '))}</span>`:''}${ageTxt?`<span class="tag accent" title="Granted ${fd(granted.status_change_date)} · ${age} days">${ico('clock',13)} Authority age: ${ageTxt}</span>`:''}</div>
+          </div>
+        </div>
+        <div class="prof-actions">
+          <button id="cpy" title="Copy all carrier details">${ico('copy',13)}<span>Copy all</span></button>
+          <a class="btnlink" href="${safer}" target="_blank" rel="noopener" title="Open FMCSA SAFER snapshot">${ico('ext',13)}<span>SAFER</span></a>
+        </div>
+      </div>
+      <div class="prof-grid">
+        <section class="box"><h4>${ico('user',15)} Contact</h4>
+          ${row('user','Owner / Officer',c.company_officer_1?cp(c.company_officer_1):'')}
+          ${row('phone','Phone',ph?`<b>${cp(ph)}</b>${cell?`<div class="sub" style="margin-top:4px">Cell ${cp(cell)}</div>`:''}`:'')}
+          ${row('mail','Email',c.email_address?cp(c.email_address.toLowerCase()):'')}
+          ${row('pin','Address',addr?cp(addr):'')}
+        </section>
+        <section class="box"><h4>${ico('truck',15)} Fleet</h4>
+          <div class="tiles t3">${tile(veh.pu,'Total trucks')}${tile(veh.trail,'Trailers')}${tile(n(c.total_drivers),'Drivers')}</div>
+          <div class="sublbl">Cargo they can haul</div>
+          <div class="cargo">${lk.cargo?lk.cargo.split(', ').map(e=>`<span class="cchip">${ico('box',12)}${esc(e)}</span>`).join(''):'<span class="muted">No cargo listed</span>'}</div>
+        </section>
+        <section class="box"><h4>${ico('doc',15)} Equipment &amp; registration</h4>
+          <div class="kv2"><div>Truck type</div><div><span class="chip ${veh.v.startsWith('Semi (')?'semi':veh.v.startsWith('Box')?'boxt':''}">${esc(veh.v)}</span></div>
+          <div>Likely trailer</div><div>${lk.equip.split(', ').map(e=>`<span class="chip">${esc(e)}</span>`).join('')}</div>
+          <div>DOT registered</div><div>${fd(c.add_date)||dash}</div><div>Last MCS-150</div><div>${c.mcs150_date?fd(c.mcs150_date.slice(0,8).replace(/-/g,'')):dash}</div></div>
+        </section>
+      </div>
+      ${insSection}
+      <section class="box hist"><h4>${ico('doc',15)} Authority history</h4>
+        ${auth.length?`<table class="htbl"><thead><tr><th>Date</th><th>Docket</th><th>Authority type</th><th>Status</th><th>Reason</th></tr></thead><tbody>${auth.slice(0,12).map(a=>`<tr><td>${fd(a.status_change_date)}</td><td><b>${esc(a.docket_number)}</b></td><td>${esc(a.op_auth_type)}</td><td><span class="st ${stCls(a.op_auth_status)}">${esc(a.op_auth_status)}</span></td><td>${esc(a.reason)}</td></tr>`).join('')}</tbody></table>`
+        :'<p class="muted" style="margin:0">No Motus authority records. Older history is on SAFER.</p>'}
+      </section>
+    </div>`;
+    $('cpy').onclick=e=>copyText(mkSummary(),e.currentTarget);
+  }catch(e){out.innerHTML='<p style="color:#b42318">Could not reach FMCSA data. Try again.</p>'}
+}
+$('lkGo').onclick=lookup;
+getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
+
+// ---- live update check (works when hosted on the web) ----
+const APP_VERSION='2026.11.24-1';
+function checkUpdate(){
+  if(!/^https?:/.test(location.protocol)) return;
+  xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
+    if(v&&v.version&&v.version!==APP_VERSION&&!document.getElementById('upd')){
+      const b=document.createElement('div'); b.id='upd';
+      b.innerHTML='<span><b>New update available.</b> Refresh to get the latest Leads Hunter.</span><button>Refresh now</button>';
+      b.querySelector('button').onclick=()=>location.reload();
+      document.body.appendChild(b);
+    }
+  }).catch(()=>{});
+}
+checkUpdate(); setInterval(checkUpdate,5*60*1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
+</script>
+</body>
+</html>
