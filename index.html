@@ -543,11 +543,15 @@ async function run(){
     const recentRange=(new Date()-new Date(+f.slice(0,4),+f.slice(4,6)-1,+f.slice(6,8)))/86400000<=45;
     if(recentRange) tasks.unshift({k:'all',ids:[]}); else for(let i=0;i<dockets.length;i+=200) tasks.push({k:'s',ids:dockets.slice(i,i+200)});
     const total=Math.max(1,need.length+(recentRange?0:dockets.length));
+    let censusBlocked=0;
     const keep=r=>{const L=latest[r.docket_number]; if(!L||r.status_change_date>L.status_change_date) latest[r.docket_number]=r};
     const fetchTask=async tk=>{
       const list=tk.ids.map(d=>`'${d}'`).join(',');
       if(tk.k==='c'){
-        const rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`);
+        if(censusBlocked>=2) throw new Error('skipped: company file busy');
+        let rows;
+        try{ rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`,30000,3); censusBlocked=0; }
+        catch(e){ if(e.status===429||e.status===503) censusBlocked++; throw e; }
         rows.forEach(r=>{census[r.dot_number]=r;CC[r.dot_number]=r;ccDirty=true});
       }else if(tk.k==='all'){
         // one request: every authority change since the start date, then keep the newest per docket
@@ -563,8 +567,28 @@ async function run(){
       done+=tk.ids.length;
       status(`Step 2 of 2: getting company details and current status… ${Math.min(100,Math.round(done/total*100))}%`);}};
     await Promise.all(Array.from({length:APP_TOKEN?4:2},worker));
-    for(const tk of failed.splice(0)){ try{await fetchTask(tk)}catch(e){failed.push(tk)} }
-    ccSave(); onThrottle=null;
+    for(const tk of failed.splice(0)){ if(tk.k==='c'&&censusBlocked>=2){failed.push(tk);continue} try{await fetchTask(tk)}catch(e){failed.push(tk)} }
+    ccSave();
+    // Backup: if FMCSA's company-records file is busy, fill name/phone/city from the Motus carrier file
+    let backup=0;
+    const missing=dots.filter(d=>!census[d]);
+    if(missing.length){
+      status(`Company records are busy at FMCSA — filling ${missing.length} carriers from the Motus carrier file…`);
+      for(let i=0;i<missing.length;i+=200){
+        const ids=missing.slice(i,i+200);
+        try{
+          const rows=await getJSON(`${API}inys-ebih.json?$select=usdot_number,legal_name,dba_name,bus_city,bus_state_code,bus_telno&$limit=5000&$where=${encodeURIComponent(`usdot_number in(${ids.map(d=>`'${d}'`).join(',')})`)}`);
+          rows.forEach(r=>{const d=r.usdot_number;if(census[d]&&!census[d]._backup)return;
+            const o=census[d]||{dot_number:d,_backup:true};
+            if(r.legal_name)o.legal_name=r.legal_name; if(r.dba_name)o.dba_name=r.dba_name;
+            if(r.bus_telno)o.phone=r.bus_telno.replace(/\D/g,'').replace(/^1(?=\d{10}$)/,'');
+            if(r.bus_city)o.phy_city=r.bus_city; if(r.bus_state_code)o.phy_state=r.bus_state_code;
+            census[d]=o;});
+        }catch(e){}
+      }
+      backup=missing.filter(d=>census[d]&&census[d]._backup).length;
+    }
+    onThrottle=null;
     const nowNoon=new Date(); nowNoon.setHours(12,0,0,0);
     const ageOf=s=>Math.round((nowNoon-new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8),12))/86400000);
     let all=auth.map(a=>{
@@ -583,8 +607,9 @@ async function run(){
     status('Building the list…'); await new Promise(r=>setTimeout(r,30));
     shown=PAGE; buildFilters(); render(); $('results').hidden=false; $('empty').hidden=true;
     const miss=DATA.filter(d=>!d.found).length;
+    const bk=backup?` ${backup} carriers show name, phone and city only (FMCSA's main company file was busy — search again later for email and truck details).`:'';
     const old=f<ymd(MOTUS_START)?' Note: grants before June 2026 come from records FMCSA carried over into Motus, so older periods can be less complete than recent ones.':'';
-    status(`Done: ${DATA.length} authorities found${inactive?` (${inactive} no longer active ${$('activeOnly').checked?'were removed':'are marked Inactive'})`:''}${miss?`, ${miss} without company details${failed.length?' (FMCSA did not answer for some — click Find carriers again to retry)':' yet (very new registrations)'}`:''}.`+old);
+    status(`Done: ${DATA.length} authorities found${inactive?` (${inactive} no longer active ${$('activeOnly').checked?'were removed':'are marked Inactive'})`:''}${miss?`, ${miss} without company details${failed.length?' (FMCSA did not answer for some — click Find carriers again to retry)':' yet (very new registrations)'}`:''}.`+bk+old);
   }catch(e){status('Could not reach FMCSA data ('+e.message+'). If this page is open inside a Claude preview, download the file and open it directly in Chrome. Otherwise check the internet connection, or try a Chrome Incognito window (an extension may be blocking it).',true)}
   $('go').disabled=false;
 }
@@ -720,11 +745,12 @@ async function lookupContact(kind,val){
 // MC number -> list of {dot, docket}
 async function dotsForMC(num,prefix){
   const dk=prefix+num, found=new Map();
-  const [a,c1,c2]=await Promise.all([
+  const [a,c1,c2,m]=await Promise.all([
     getJSON(`${API}${AUTH}.json?$select=usdot_number&docket_number=${dk}&$limit=50`).catch(()=>[]),
-    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket1prefix=${prefix}&docket1=${num}&$limit=20`).catch(()=>[]),
-    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket2prefix=${prefix}&docket2=${num}&$limit=20`).catch(()=>[])]);
-  a.forEach(r=>found.set(r.usdot_number,dk)); c1.concat(c2).forEach(r=>found.set(r.dot_number,dk));
+    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket1prefix=${prefix}&docket1=${num}&$limit=20`,30000,2).catch(()=>[]),
+    getJSON(`${API}${CENSUS}.json?$select=dot_number&docket2prefix=${prefix}&docket2=${num}&$limit=20`,30000,2).catch(()=>[]),
+    getJSON(`${API}inys-ebih.json?$select=usdot_number&docket_number=${dk}&$limit=20`).catch(()=>[])]);
+  a.forEach(r=>found.set(r.usdot_number,dk)); c1.concat(c2).forEach(r=>found.set(r.dot_number,dk)); m.forEach(r=>found.set(r.usdot_number,dk));
   return [...found.keys()];
 }
 async function lookup(){
@@ -741,7 +767,8 @@ async function lookup(){
     const num=p?p[2]:(m?m[2]:null), prefix=p?p[1]:'MC';
     if(!num){out.innerHTML='<p class="muted">Please enter numbers only, for example 6960618 or MC463536.</p>';return}
     let dotHits=[], mcHits=[];
-    if(mode!=='mc'){const c=await getJSON(`${API}${CENSUS}.json?$select=dot_number&dot_number=${num}`); if(c.length) dotHits=[num];
+    if(mode!=='mc'){const c=await getJSON(`${API}${CENSUS}.json?$select=dot_number&dot_number=${num}`,30000,2).catch(()=>[]); if(c.length) dotHits=[num];
+      if(!c.length){const mm=await getJSON(`${API}inys-ebih.json?$select=usdot_number&usdot_number=${num}&$limit=1`).catch(()=>[]); if(mm.length) dotHits=[num];}
       if(!c.length){const a=await getJSON(`${API}${AUTH}.json?$select=usdot_number&usdot_number=${num}&$limit=1`); if(a.length) dotHits=[num];}}
     if(mode!=='dot') mcHits=await dotsForMC(num,prefix);
     const cands=[...dotHits.map(d=>({dot:d,via:'DOT '+d})),...mcHits.filter(d=>!dotHits.includes(d)).map(d=>({dot:d,via:prefix+num}))];
@@ -761,9 +788,15 @@ async function showCarrier(dot,note=''){
   const out=$('lookupOut'); out.innerHTML='<p class="muted">Loading carrier…</p>';
   try{
     const q=encodeURIComponent(dot), soft=u=>getJSON(u).catch(()=>null);
-    const [cs,auth,insNow,insHist,boc,revs]=await Promise.all([getJSON(`${API}${CENSUS}.json?dot_number=${q}`),getJSON(`${API}${AUTH}.json?$order=status_change_date DESC&usdot_number=${q}&$limit=50`),
+    let [cs,auth,insNow,insHist,boc,revs]=await Promise.all([getJSON(`${API}${CENSUS}.json?dot_number=${q}`,30000,3).catch(()=>null),getJSON(`${API}${AUTH}.json?$order=status_change_date DESC&usdot_number=${q}&$limit=50`),
       soft(`${API}c5y8-a4uz.json?usdot_number=${q}&$order=effective_date DESC&$limit=20`),soft(`${API}3uet-3z4i.json?usdot_number=${q}&$order=effective_date DESC&$limit=60`),
       soft(`${API}6snj-ed7q.json?usdot_number=${q}&$limit=5`),soft(`${API}wb4f-neki.json?usdot_number=${q}&$order=order1_serve_date DESC&$limit=20`)]);
+    let backupNote='';
+    if(!cs||!cs.length){
+      const m=await getJSON(`${API}inys-ebih.json?usdot_number=${q}&$limit=20`).catch(()=>[]);
+      if(m.length){const o={dot_number:dot};m.forEach(r=>{if(r.legal_name)o.legal_name=r.legal_name;if(r.dba_name)o.dba_name=r.dba_name;if(r.bus_telno)o.phone=r.bus_telno.replace(/\D/g,'').replace(/^1(?=\d{10}$)/,'');if(r.bus_street_po)o.phy_street=r.bus_street_po;if(r.bus_city)o.phy_city=r.bus_city;if(r.bus_state_code)o.phy_state=r.bus_state_code;if(r.bus_zip_code)o.phy_zip=r.bus_zip_code});cs=[o];}
+      if(cs===null||m.length) backupNote="FMCSA's main company file is busy right now, so this card shows name, phone and address from the Motus carrier file. Try again later for email, trucks and cargo.";
+    }
     const c=cs[0]||{}; const veh=vehicle(c), lk=likely(c);
     const mcs=[...new Set([...auth.map(a=>a.docket_number),...[[c.docket1prefix,c.docket1],[c.docket2prefix,c.docket2]].filter(x=>x[0]&&x[1]).map(x=>x[0]+x[1])])];
     const cur=auth[0]; const granted=auth.find(a=>/^granted$/i.test(a.reason));
@@ -800,7 +833,7 @@ async function showCarrier(dot,note=''){
       ${histRows?`<details class="ihist"><summary>Insurance history (${histIns.length})</summary><table class="htbl"><thead><tr><th>Type</th><th>Insurance company</th><th>Policy #</th><th>Coverage</th><th>Effective</th><th>Ended</th><th>Reason</th></tr></thead><tbody>${histRows}</tbody></table></details>`:''}
     </section>`;
     const safer=`https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=${encodeURIComponent(dot)}`;
-    out.innerHTML=(note?`<div class="note">${esc(note)}</div>`:'')+`
+    out.innerHTML=(note?`<div class="note">${esc(note)}</div>`:'')+(backupNote?`<div class="warn soft">${esc(backupNote)}</div>`:'')+`
     <div class="prof">
       <div class="prof-head">
         <div class="prof-id">
@@ -847,7 +880,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-2';
+const APP_VERSION='2026.11.25-3';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
