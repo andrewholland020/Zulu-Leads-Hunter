@@ -555,7 +555,7 @@ input.note{width:190px;padding:5px 7px;border:1px solid var(--line);border-radiu
   </div>
 </section>
 <section id="accountView" hidden>
-  <div class="lhead"><div><h2>My Account</h2><p>Your profile, email and password.</p></div><button class="ghost sm" id="signOut">Sign out</button></div>
+  <div class="lhead"><div><h2>My Account</h2><p>Your profile and password.</p></div><button class="ghost sm" id="signOut">Sign out</button></div>
   <div class="acgrid">
     <div class="panel acard">
       <h3>Profile</h3>
@@ -572,13 +572,7 @@ input.note{width:190px;padding:5px 7px;border:1px solid var(--line);border-radiu
       </div>
     </div>
     <div class="acright">
-      <div class="panel acard">
-        <h3>Change email</h3>
-        <p class="muted acsm">Current email: <b id="acEmail2"></b></p>
-        <label class="lf">New email<input id="acNewEmail" type="email" autocomplete="email"></label>
-        <button class="primary sm" id="acEmailSave">Change email</button>
-        <p class="acmsg" id="acEmailMsg"></p>
-      </div>
+      
       <div class="panel acard">
         <h3>Change password</h3>
         <p class="muted acsm">For your safety, your current password is never shown, not even to admins. You can set a new one here anytime.</p>
@@ -1098,7 +1092,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-15';
+const APP_VERSION='2026.11.25-16';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
@@ -1266,19 +1260,14 @@ const ini=n=>n.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()
 function paintUser(u){const md=u.user_metadata||{};const nm=md.full_name||u.email.split('@')[0];const av=md.avatar_url;
   $('whoName').textContent=nm;$('whoMail').textContent=u.email;$('lOwner').textContent=nm;
   const face=av?`<img src="${esc(av)}" alt="">`:esc(ini(nm));$('whoAv').innerHTML=face;$('acAv').innerHTML=face;$('acRm').hidden=!av;
-  $('acName').value=nm;$('whoBtn').title=`${nm} · My Account`;$('acEmail').textContent=u.email;$('acEmail2').textContent=u.email;
+  $('acName').value=nm;$('whoBtn').title=`${nm} · My Account`;$('acEmail').textContent=u.email;
   $('acType').textContent=isAdmin?'Admin':'Free';$('acSince').textContent=new Date(u.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   $('acLast').textContent=u.last_sign_in_at?when(new Date(u.last_sign_in_at).getTime()):'—';
-  if(u.new_email){$('acEmailMsg').className='acmsg ok';$('acEmailMsg').textContent=`Waiting for you to confirm ${u.new_email}. Check that inbox.`}}
+}
 const amsg=(id,t,ok)=>{$(id).textContent=t;$(id).className='acmsg '+(ok?'ok':'err')};
 $('whoBtn').onclick=()=>showView('accountView');
 $('acNameSave').onclick=async()=>{const n=$('acName').value.trim();if(!n)return toast('Type your name first');
   const {data,error}=await sb.auth.updateUser({data:{full_name:n}});if(error)return toast(friendly(error));me=data.user;paintUser(me);toast('Name saved')};
-$('acEmailSave').onclick=async()=>{const em=$('acNewEmail').value.trim().toLowerCase();
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return amsg('acEmailMsg','Type a valid email address.');if(em===me.email)return amsg('acEmailMsg','That is already your email.');
-  amsg('acEmailMsg','Sending…',true);const {error}=await sb.auth.updateUser({email:em},{emailRedirectTo:location.origin+location.pathname});
-  if(error)return amsg('acEmailMsg',friendly(error));$('acNewEmail').value='';
-  amsg('acEmailMsg',`We sent a confirmation link to ${em}. Your email changes after you click it.`,true)};
 $('acPwSave').onclick=async()=>{const a=$('acPw1').value,b=$('acPw2').value;
   if(a.length<8)return amsg('acPwMsg','Use at least 8 characters.');if(a!==b)return amsg('acPwMsg','The two passwords do not match.');
   amsg('acPwMsg','Saving…',true);const {error}=await sb.auth.updateUser({password:a});
