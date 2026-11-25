@@ -357,6 +357,10 @@ input.note{width:190px;padding:5px 7px;border:1px solid var(--line);border-radiu
   footer{font-size:11.5px;padding:12px 14px}
   #toast{bottom:calc(76px + env(safe-area-inset-bottom))}
   .mbox{margin:0 12px}
+  .bars{height:170px;gap:3px;padding:20px 10px 10px}
+  .bcol.zero .bv{visibility:hidden}
+  .bcol.minor .bl{visibility:hidden}
+  .bl{font-size:10px}
 }
 </style>
 </head>
@@ -1076,7 +1080,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-10';
+const APP_VERSION='2026.11.25-11';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
@@ -1269,7 +1273,7 @@ $('acFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f
 $('acRm').onclick=async()=>{await sb.storage.from('avatars').remove([`${me.id}/avatar.webp`]);const {data,error}=await sb.auth.updateUser({data:{avatar_url:null}});if(error)return toast(friendly(error));me=data.user;paintUser(me);toast('Photo removed')};
 
 // ---- usage (admins) ----
-function bars(el,arr){const m=Math.max(1,...arr.map(x=>x.n));$(el).innerHTML=arr.map((x,i)=>`<div class="bcol${i===arr.length-1?' today':''}"><span class="bv">${x.n}</span><i style="height:${Math.max(3,x.n/m*100)}%"></i><span class="bl">${i===arr.length-1?'Today':new Date(x.d+'T12:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>`).join('')}
+function bars(el,arr){const m=Math.max(1,...arr.map(x=>x.n));$(el).innerHTML=arr.map((x,i)=>`<div class="bcol${i===arr.length-1?' today':''}${(i%3===0||i===arr.length-1)&&i<arr.length-2||i===arr.length-1?'':' minor'}${x.n?'':' zero'}"><span class="bv">${x.n}</span><i style="height:${Math.max(3,x.n/m*100)}%"></i><span class="bl">${i===arr.length-1?'Today':new Date(x.d+'T12:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>`).join('')}
 async function loadUsage(){$('kpis').innerHTML='<div class="stat"><b>…</b><span>Loading</span></div>';
   const {data,error}=await sb.rpc('lh_usage');if(error){$('kpis').innerHTML=`<div class="stat"><b>—</b><span>${esc(friendly(error))}</span></div>`;return}
   $('kpis').innerHTML=[[data.total,'Total accounts'],[data.today,'Signed in today'],[data.now,'Using it right now'],[data.week,'New accounts this week'],[data.searches,'Searches today']]
