@@ -478,12 +478,12 @@ function xhrJSON(url,timeoutMs){
     x.send();
   });
 }
-async function getJSON(url,timeoutMs=30000,tries=6){
+async function getJSON(url,timeoutMs=30000,tries=4){
   for(let i=0;i<tries;i++){
     try{ return await xhrJSON(url,timeoutMs); }
     catch(e){
       if(i===tries-1||(e.status&&e.status<500&&e.status!==429)) throw e;
-      const wait=e.status===429?Math.max(e.retryAfter*1000,4000*(i+1)):1000*(i+1);
+      const wait=e.status===429?Math.min(15000,Math.max(e.retryAfter*1000,2000*(i+1))):1000*(i+1);
       if(e.status===429&&onThrottle) onThrottle(wait);
       await new Promise(r=>setTimeout(r,wait));
     }
@@ -544,6 +544,22 @@ async function run(){
     if(recentRange) tasks.unshift({k:'all',ids:[]}); else for(let i=0;i<dockets.length;i+=200) tasks.push({k:'s',ids:dockets.slice(i,i+200)});
     const total=Math.max(1,need.length+(recentRange?0:dockets.length));
     let censusBlocked=0;
+    const fillBackup=async ids=>{
+      const rows=await getJSON(`${API}inys-ebih.json?$select=usdot_number,legal_name,dba_name,bus_city,bus_state_code,bus_telno&$limit=5000&$where=${encodeURIComponent(`usdot_number in(${ids.map(d=>`'${d}'`).join(',')})`)}`);
+      rows.forEach(r=>{const d=r.usdot_number;if(census[d]&&!census[d]._backup)return;
+        const o=census[d]||{dot_number:d,_backup:true};
+        if(r.legal_name)o.legal_name=r.legal_name; if(r.dba_name)o.dba_name=r.dba_name;
+        if(r.bus_telno)o.phone=r.bus_telno.replace(/\D/g,'').replace(/^1(?=\d{10}$)/,'');
+        if(r.bus_city)o.phy_city=r.bus_city; if(r.bus_state_code)o.phy_state=r.bus_state_code;
+        census[d]=o;});
+    };
+    if(need.length){
+      // one quick check: is FMCSA's company file answering right now? If not, go straight to the backup file.
+      try{ await getJSON(`${API}${CENSUS}.json?$select=dot_number&$limit=1`,15000,2); }
+      catch(e){ if(e.status===429||e.status===503){ censusBlocked=2;
+        for(let i=tasks.length-1;i>=0;i--) if(tasks[i].k==='c') tasks.splice(i,1);
+        for(let i=0;i<need.length;i+=200) tasks.push({k:'b',ids:need.slice(i,i+200)}); } }
+    }
     const keep=r=>{const L=latest[r.docket_number]; if(!L||r.status_change_date>L.status_change_date) latest[r.docket_number]=r};
     const fetchTask=async tk=>{
       const list=tk.ids.map(d=>`'${d}'`).join(',');
@@ -553,6 +569,8 @@ async function run(){
         try{ rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`,30000,3); censusBlocked=0; }
         catch(e){ if(e.status===429||e.status===503) censusBlocked++; throw e; }
         rows.forEach(r=>{census[r.dot_number]=r;CC[r.dot_number]=r;ccDirty=true});
+      }else if(tk.k==='b'){
+        await fillBackup(tk.ids);
       }else if(tk.k==='all'){
         // one request: every authority change since the start date, then keep the newest per docket
         const rows=await getJSON(`${API}${AUTH}.json?$select=docket_number,op_auth_status,reason,status_change_date&$limit=50000&$where=${encodeURIComponent(`status_change_date >= '${f}'`)}`);
@@ -569,25 +587,14 @@ async function run(){
     await Promise.all(Array.from({length:APP_TOKEN?4:2},worker));
     for(const tk of failed.splice(0)){ if(tk.k==='c'&&censusBlocked>=2){failed.push(tk);continue} try{await fetchTask(tk)}catch(e){failed.push(tk)} }
     ccSave();
-    // Backup: if FMCSA's company-records file is busy, fill name/phone/city from the Motus carrier file
+    // Backup for anything still missing (company file got busy part-way through)
     let backup=0;
     const missing=dots.filter(d=>!census[d]);
     if(missing.length){
       status(`Company records are busy at FMCSA — filling ${missing.length} carriers from the Motus carrier file…`);
-      for(let i=0;i<missing.length;i+=200){
-        const ids=missing.slice(i,i+200);
-        try{
-          const rows=await getJSON(`${API}inys-ebih.json?$select=usdot_number,legal_name,dba_name,bus_city,bus_state_code,bus_telno&$limit=5000&$where=${encodeURIComponent(`usdot_number in(${ids.map(d=>`'${d}'`).join(',')})`)}`);
-          rows.forEach(r=>{const d=r.usdot_number;if(census[d]&&!census[d]._backup)return;
-            const o=census[d]||{dot_number:d,_backup:true};
-            if(r.legal_name)o.legal_name=r.legal_name; if(r.dba_name)o.dba_name=r.dba_name;
-            if(r.bus_telno)o.phone=r.bus_telno.replace(/\D/g,'').replace(/^1(?=\d{10}$)/,'');
-            if(r.bus_city)o.phy_city=r.bus_city; if(r.bus_state_code)o.phy_state=r.bus_state_code;
-            census[d]=o;});
-        }catch(e){}
-      }
-      backup=missing.filter(d=>census[d]&&census[d]._backup).length;
+      for(let i=0;i<missing.length;i+=200){ try{await fillBackup(missing.slice(i,i+200))}catch(e){} }
     }
+    backup=dots.filter(d=>census[d]&&census[d]._backup).length;
     onThrottle=null;
     const nowNoon=new Date(); nowNoon.setHours(12,0,0,0);
     const ageOf=s=>Math.round((nowNoon-new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8),12))/86400000);
@@ -880,7 +887,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-3';
+const APP_VERSION='2026.11.25-4';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
