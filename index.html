@@ -390,6 +390,10 @@ header p{font-size:12px;margin-top:1px}
 
 <script>
 const API='https://data.transportation.gov/resource/';
+// Free Socrata app token for data.transportation.gov. With a token, FMCSA's data site limits by app instead of
+// by office IP address, so the whole team can search at once. App tokens are meant to be public (not a password).
+const APP_TOKEN='';
+let onThrottle=null;
 const AUTH='yu5v-wbh6', CENSUS='az4n-8mr2';
 const CALL=['Not Called','No Answer','Voicemail','Call Back','Interested','Not Interested','Signed Up','Wrong Number'];
 const CN={genfreight:'General Freight',household:'Household Goods',metalsheet:'Metal/Coils',motoveh:'Motor Vehicles',drivetow:'Driveaway/Towaway',logpole:'Logs/Poles/Lumber',bldgmat:'Building Materials',mobilehome:'Mobile Homes',machlrg:'Machinery/Large Objects',produce:'Fresh Produce',liqgas:'Liquids/Gases',intermodal:'Intermodal Containers',passengers:'Passengers',oilfield:'Oilfield Equipment',livestock:'Livestock',grainfeed:'Grain/Feed/Hay',coalcoke:'Coal/Coke',meat:'Meat',garbage:'Garbage/Refuse',usmail:'US Mail',chem:'Chemicals',drybulk:'Dry Bulk',coldfood:'Refrigerated Food',beverages:'Beverages',paperprod:'Paper Products',utility:'Utilities',farmsupp:'Farm Supplies',construct:'Construction',waterwell:'Water Well',cargoothr:'Other'};
@@ -465,21 +469,31 @@ const status=(t,err)=>{$('status').textContent=t;$('status').className=err?'err'
 
 // XHR instead of fetch: some browser extensions wrap fetch() and break on AbortSignal
 function xhrJSON(url,timeoutMs){
+  if(APP_TOKEN&&url.startsWith(API)) url+=(url.includes('?')?'&':'?')+'$$app_token='+encodeURIComponent(APP_TOKEN);
   return new Promise((res,rej)=>{
     const x=new XMLHttpRequest(); x.open('GET',url,true); x.timeout=timeoutMs; x.setRequestHeader('Accept','application/json');
     x.onload=()=>{ if(x.status>=200&&x.status<300){ try{res(JSON.parse(x.responseText))}catch(e){rej(new Error('Bad data from FMCSA'))} }
-      else { const e=new Error('HTTP '+x.status); e.status=x.status; rej(e); } };
+      else { const e=new Error(x.status===429?'FMCSA is limiting requests (429)':'HTTP '+x.status); e.status=x.status; e.retryAfter=+x.getResponseHeader('Retry-After')||0; rej(e); } };
     x.onerror=()=>rej(new Error('network error')); x.ontimeout=()=>rej(new Error('timed out'));
     x.send();
   });
 }
-async function getJSON(url,timeoutMs=30000,tries=4){
+async function getJSON(url,timeoutMs=30000,tries=6){
   for(let i=0;i<tries;i++){
     try{ return await xhrJSON(url,timeoutMs); }
-    catch(e){ if((e.status&&e.status<500&&e.status!==429)||i===tries-1) throw e; }
-    await new Promise(r=>setTimeout(r,1000*(i+1)));
+    catch(e){
+      if(i===tries-1||(e.status&&e.status<500&&e.status!==429)) throw e;
+      const wait=e.status===429?Math.max(e.retryAfter*1000,4000*(i+1)):1000*(i+1);
+      if(e.status===429&&onThrottle) onThrottle(wait);
+      await new Promise(r=>setTimeout(r,wait));
+    }
   }
 }
+// small per-browser cache of company records (refreshed daily) so repeat searches are instant
+const CKEY='lhCensus1', today0=new Date().toISOString().slice(0,10);
+let CC={}; try{const o=JSON.parse(localStorage.getItem(CKEY)||'{}'); if(o.d===today0) CC=o.r||{};}catch(e){}
+let ccDirty=false; const ccSave=()=>{if(!ccDirty)return; ccDirty=false; try{localStorage.setItem(CKEY,JSON.stringify({d:today0,r:CC}))}catch(e){CC={};try{localStorage.removeItem(CKEY)}catch(_){}}};
+const CENSUS_FIELDS='dot_number,legal_name,dba_name,phone,cell_phone,email_address,company_officer_1,phy_city,phy_state,power_units,owntruck,owntract,owntrail,trmtruck,trmtract,trmtrail,trptruck,trptract,trptrail,total_drivers,crgo_genfreight,crgo_passengers,crgo_household,crgo_metalsheet,crgo_motoveh,crgo_drivetow,crgo_logpole,crgo_bldgmat,crgo_mobilehome,crgo_machlrg,crgo_produce,crgo_liqgas,crgo_intermodal,crgo_oilfield,crgo_livestock,crgo_grainfeed,crgo_coalcoke,crgo_meat,crgo_garbage,crgo_usmail,crgo_chem,crgo_drybulk,crgo_coldfood,crgo_beverages,crgo_paperprod,crgo_utility,crgo_farmsupp,crgo_construct,crgo_waterwell,crgo_cargoothr,crgo_cargoothr_desc';
 
 function vehicle(c){
   const trucks=n(c.owntruck)+n(c.trmtruck)+n(c.trptruck), tract=n(c.owntract)+n(c.trmtract)+n(c.trptract), pu=n(c.power_units);
@@ -512,35 +526,45 @@ async function run(){
     status('Step 1 of 2: getting new authorities from Motus…');
     const rsn=$('reason').value;
     let where=`status_change_date between '${f}' and '${t}'`;
-    where+= rsn==='both'?` AND (upper(reason)='GRANTED' OR upper(reason)='REINSTATED')`:` AND upper(reason)='${rsn.toUpperCase()}'`;
-    if(!$('brokers').checked) where+=` AND op_auth_type like 'Motor Carrier of Property%'`;
-    else where+=` AND (op_auth_type like 'Motor Carrier of Property%' OR op_auth_type like 'Broker%')`;
+    const RS={Granted:"'Granted','GRANTED'",Reinstated:"'Reinstated','REINSTATED'",both:"'Granted','GRANTED','Reinstated','REINSTATED'"};
+    where+=` AND reason in(${RS[rsn]})`;
+    if(!$('brokers').checked) where+=` AND starts_with(op_auth_type,'Motor Carrier of Property')`;
+    else where+=` AND (starts_with(op_auth_type,'Motor Carrier of Property') OR starts_with(op_auth_type,'Broker'))`;
+    onThrottle=w=>status(`FMCSA's data site asked us to slow down — waiting ${Math.round(w/1000)}s and continuing automatically…`);
     const auth=await getJSON(`${API}${AUTH}.json?$limit=50000&$order=status_change_date DESC&$where=${encodeURIComponent(where)}`);
     if(!auth.length){status('No new authorities found for these dates. Motus usually publishes the day\'s changes by evening.');$('go').disabled=false;return}
     const dots=[...new Set(auth.map(a=>a.usdot_number))];
     const dockets=[...new Set(auth.map(a=>a.docket_number))];
-    const total=dots.length+dockets.length;
     if(dots.length>3000) status(`Found ${dots.length} authorities — this is a big range and may take a few minutes. Keep this page open.`);
     const census={}, latest={}; let done=0; const failed=[];
+    const need=dots.filter(d=>{if(CC[d]){census[d]=CC[d];return false}return true});
     const tasks=[];
-    for(let i=0;i<dots.length;i+=100) tasks.push({k:'c',ids:dots.slice(i,i+100)});
-    for(let i=0;i<dockets.length;i+=100) tasks.push({k:'s',ids:dockets.slice(i,i+100)});
-    const fetchTask=async t=>{
-      const list=t.ids.map(d=>`'${d}'`).join(',');
-      if(t.k==='c'){
-        const rows=await getJSON(`${API}${CENSUS}.json?$limit=1000&$where=${encodeURIComponent(`dot_number in(${list})`)}`);
-        rows.forEach(r=>census[r.dot_number]=r);
+    for(let i=0;i<need.length;i+=200) tasks.push({k:'c',ids:need.slice(i,i+200)});
+    const recentRange=(new Date()-new Date(+f.slice(0,4),+f.slice(4,6)-1,+f.slice(6,8)))/86400000<=45;
+    if(recentRange) tasks.unshift({k:'all',ids:[]}); else for(let i=0;i<dockets.length;i+=200) tasks.push({k:'s',ids:dockets.slice(i,i+200)});
+    const total=Math.max(1,need.length+(recentRange?0:dockets.length));
+    const keep=r=>{const L=latest[r.docket_number]; if(!L||r.status_change_date>L.status_change_date) latest[r.docket_number]=r};
+    const fetchTask=async tk=>{
+      const list=tk.ids.map(d=>`'${d}'`).join(',');
+      if(tk.k==='c'){
+        const rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`);
+        rows.forEach(r=>{census[r.dot_number]=r;CC[r.dot_number]=r;ccDirty=true});
+      }else if(tk.k==='all'){
+        // one request: every authority change since the start date, then keep the newest per docket
+        const rows=await getJSON(`${API}${AUTH}.json?$select=docket_number,op_auth_status,reason,status_change_date&$limit=50000&$where=${encodeURIComponent(`status_change_date >= '${f}'`)}`);
+        const want=new Set(dockets); rows.forEach(r=>{if(want.has(r.docket_number))keep(r)});
       }else{
-        const rows=await getJSON(`${API}${AUTH}.json?$limit=5000&$order=status_change_date DESC&$where=${encodeURIComponent(`docket_number in(${list})`)}`);
-        rows.forEach(r=>{const L=latest[r.docket_number]; if(!L||r.status_change_date>L.status_change_date) latest[r.docket_number]=r});
+        const rows=await getJSON(`${API}${AUTH}.json?$select=docket_number,op_auth_status,reason,status_change_date&$limit=5000&$where=${encodeURIComponent(`docket_number in(${list})`)}`);
+        rows.forEach(keep);
       }
     };
-    const worker=async()=>{while(tasks.length){const t=tasks.shift();
-      try{await fetchTask(t)}catch(e){failed.push(t)}
-      done+=t.ids.length;
-      status(`Step 2 of 2: getting company details and current status… ${Math.round(Math.min(done,total)/total*100)}%`);}};
-    await Promise.all([worker(),worker(),worker(),worker(),worker()]);
-    for(const t of failed.splice(0)){ try{await fetchTask(t)}catch(e){failed.push(t)} }
+    const worker=async()=>{while(tasks.length){const tk=tasks.shift();
+      try{await fetchTask(tk)}catch(e){failed.push(tk)}
+      done+=tk.ids.length;
+      status(`Step 2 of 2: getting company details and current status… ${Math.min(100,Math.round(done/total*100))}%`);}};
+    await Promise.all(Array.from({length:APP_TOKEN?4:2},worker));
+    for(const tk of failed.splice(0)){ try{await fetchTask(tk)}catch(e){failed.push(tk)} }
+    ccSave(); onThrottle=null;
     const nowNoon=new Date(); nowNoon.setHours(12,0,0,0);
     const ageOf=s=>Math.round((nowNoon-new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8),12))/86400000);
     let all=auth.map(a=>{
@@ -823,7 +847,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.24-1';
+const APP_VERSION='2026.11.25-1';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
