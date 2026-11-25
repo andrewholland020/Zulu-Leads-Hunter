@@ -392,7 +392,7 @@ header p{font-size:12px;margin-top:1px}
 const API='https://data.transportation.gov/resource/';
 // Free Socrata app token for data.transportation.gov. With a token, FMCSA's data site limits by app instead of
 // by office IP address, so the whole team can search at once. App tokens are meant to be public (not a password).
-const APP_TOKEN='';
+const APP_TOKEN='0T7jOuRygUpAqSEsxAnv1gPKX';
 let onThrottle=null;
 const AUTH='yu5v-wbh6', CENSUS='az4n-8mr2';
 const CALL=['Not Called','No Answer','Voicemail','Call Back','Interested','Not Interested','Signed Up','Wrong Number'];
@@ -847,7 +847,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-1';
+const APP_VERSION='2026.11.25-2';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
