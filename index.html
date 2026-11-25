@@ -555,8 +555,8 @@ async function run(){
     };
     if(need.length){
       // one quick check: is FMCSA's company file answering right now? If not, go straight to the backup file.
-      try{ await getJSON(`${API}${CENSUS}.json?$select=dot_number&$limit=1`,15000,2); }
-      catch(e){ if(e.status===429||e.status===503){ censusBlocked=2;
+      try{ await getJSON(`${API}${CENSUS}.json?$select=dot_number&$limit=50&$where=${encodeURIComponent(`dot_number in(${need.slice(0,25).map(d=>`'${d}'`).join(',')})`)}`,6000,2); }
+      catch(e){ { censusBlocked=2;
         for(let i=tasks.length-1;i>=0;i--) if(tasks[i].k==='c') tasks.splice(i,1);
         for(let i=0;i<need.length;i+=200) tasks.push({k:'b',ids:need.slice(i,i+200)}); } }
     }
@@ -564,10 +564,10 @@ async function run(){
     const fetchTask=async tk=>{
       const list=tk.ids.map(d=>`'${d}'`).join(',');
       if(tk.k==='c'){
-        if(censusBlocked>=2) throw new Error('skipped: company file busy');
+        if(censusBlocked>=2){ tasks.push({k:'b',ids:tk.ids}); tk.ids=[]; return; }
         let rows;
-        try{ rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`,30000,3); censusBlocked=0; }
-        catch(e){ if(e.status===429||e.status===503) censusBlocked++; throw e; }
+        try{ rows=await getJSON(`${API}${CENSUS}.json?$select=${CENSUS_FIELDS}&$limit=2000&$where=${encodeURIComponent(`dot_number in(${list})`)}`,10000,1); }
+        catch(e){ censusBlocked=2; tasks.push({k:'b',ids:tk.ids}); tk.ids=[]; return; }
         rows.forEach(r=>{census[r.dot_number]=r;CC[r.dot_number]=r;ccDirty=true});
       }else if(tk.k==='b'){
         await fillBackup(tk.ids);
@@ -887,7 +887,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-4';
+const APP_VERSION='2026.11.25-5';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
