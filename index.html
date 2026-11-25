@@ -319,6 +319,41 @@ input.note{width:190px;padding:5px 7px;border:1px solid var(--line);border-radiu
 .mbox input{width:100%;box-sizing:border-box;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit;margin:4px 0 10px}
 .mact{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 
+
+.callbtn,.mlbl{display:none}
+@media(max-width:760px){
+  #tbl thead,#lvTbl thead{display:none}
+  #tbl,#tbl tbody,#lvTbl,#lvTbl tbody{display:block;width:100%}
+  #tw,#lvWrap{background:var(--bg)!important;max-height:none!important;min-height:0!important;overflow:visible!important;padding:10px 8px 2px;border-radius:0}
+  tr.lrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;margin:0 0 10px;box-shadow:0 1px 3px rgba(12,31,59,.06)}
+  tr.lrow td{display:block;padding:0!important;border:0!important;background:transparent!important;text-align:left!important}
+  tr.lrow .c-n{display:none}
+  tr.lrow .c-co{order:1;flex:1 1 60%;min-width:0}
+  tr.lrow .c-co .co{font-size:15.5px;font-weight:700;line-height:1.25;color:var(--ink)}
+  tr.lrow .c-now{order:2;flex:none;align-self:flex-start}
+  tr.lrow .c-mc{order:3;flex:1 1 100%;display:flex!important;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:13px}
+  tr.lrow .c-mc .sub{margin:0}
+  tr.lrow .c-ph{order:4;flex:1 1 100%;display:grid!important;grid-template-columns:1fr auto;align-items:center;column-gap:10px;padding:10px 0 4px!important;margin-top:4px;border-top:1px solid #f1f5f9!important;font-size:14.5px}
+  tr.lrow .c-ph>*{grid-column:1}
+  tr.lrow .c-ph .callbtn{display:inline-flex;grid-column:2;grid-row:1 / span 3;align-items:center;gap:6px;background:#16a34a;color:#fff;font-weight:700;font-size:14px;padding:9px 16px;border-radius:10px;text-decoration:none}
+  tr.lrow .c-loc,tr.lrow .c-pu,tr.lrow .c-sz,tr.lrow .c-age{order:5;flex:none;font-size:12px;color:#475569;background:#f1f5f9!important;border-radius:20px;padding:3px 9px!important;white-space:nowrap}
+  tr.lrow .c-loc:empty,tr.lrow .c-sz:empty{display:none}
+  tr.lrow .c-pu::before{content:"Trucks "}
+  tr.lrow .c-sz{display:none!important}
+  tr.lrow .c-pu b{font-weight:600}
+  tr.lrow .c-age::before{content:"Age "}
+  tr.lrow .c-call{order:6;flex:1 1 calc(100% - 140px);margin-top:6px}
+  tr.lrow .c-call select{width:100%;height:40px;font-size:14px;border-radius:9px}
+  tr.lrow .c-safer{order:7;flex:none;margin-top:6px}
+  tr.lrow .c-safer a{display:inline-flex;align-items:center;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-weight:600;text-decoration:none}
+  tr.lrow .c-safer .mlbl{display:inline;margin-right:3px}
+  tr.lrow .c-note{order:8;flex:1 1 100%}
+  tr.lrow .c-note input{width:100%;height:38px;box-sizing:border-box}
+  tr.lrow .c-last{order:9;flex:1 1 100%;font-size:11.5px}
+  tr.lrow .c-last::before{content:"Last called: "}
+  #lvTbl tr.lrow.done{background:#fafafa}
+  #lvTbl tr.here{box-shadow:0 0 0 2px var(--accent)}#lvTbl tr.here td{box-shadow:none!important}#lvTbl tr.here td.c-n,#lvTbl tr.here td.c-co,#lvTbl tr.here td.c-mc,#lvTbl tr.here td.c-ph,#lvTbl tr.here td.c-call,#lvTbl tr.here td.c-note,#lvTbl tr.here td.c-last{background:transparent!important}
+}
 /* ---- phone layout ---- */
 @media(max-width:760px){
   header{position:sticky;top:0;z-index:40;padding:10px 14px;align-items:center;gap:10px;border-bottom-width:3px}
@@ -855,19 +890,20 @@ function filtered(){
   return r;
 }
 const COLS=[['#',null],['MC / DOT','mc'],['Company','name'],['Phone / Email','phone'],['Location','state'],['Trucks','pu'],['Fleet size','size'],['Age','age'],['Status now','now'],['Call status',null],['SAFER',null]];
+const telBtn=n=>{const t=String(n||'').replace(/[^\d+]/g,'');return t.length>=10?`<a class="callbtn" href="tel:${t}" aria-label="Call ${esc(n)}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Call</a>`:''};
 function render(){
   const all=filtered(); const r=all.slice(0,shown);
   $('tbl').querySelector('thead').innerHTML='<tr>'+COLS.map(([h,k])=>`<th data-k="${k||''}">${h}${k===sortKey?(sortDir>0?' ▲':' ▼'):''}</th>`).join('')+'</tr>';
-  $('tbl').querySelector('tbody').innerHTML=r.map((d,i)=>`<tr>
-    <td class="muted">${i+1}</td>
-    <td><b>${cp(d.mc)}</b><div class="sub">${cp('DOT '+d.dot,d.dot)}</div>${d.authType==='Broker'?'<span class="chip">Broker</span>':''}${!/^granted$/i.test(d.reason)?`<span class="chip">${esc(d.reason)}</span>`:''}</td>
-    <td><div class="co">${d.name?cp(d.name):'<span class="muted">—</span>'}</div>${d.dba?`<div class="sub">DBA ${esc(d.dba)}</div>`:''}${d.officer?`<div class="sub">${esc(d.officer)}</div>`:''}</td>
-    <td>${d.phone?cp(d.phone):''}${d.cell?`<div class="sub">Cell ${cp(d.cell)}</div>`:''}<div class="sub">${d.email?cp(d.email):''}</div></td>
-    <td>${esc(d.city)}${d.state?', '+esc(d.state):''}</td>
-    <td class="num"><b>${d.pu}</b></td>
-    <td>${esc(d.size)}</td><td style="white-space:nowrap" title="Granted ${fd(d.date)} · ${d.age} days">${ageLabel(d.date)}</td><td><span class="st ${d.now==='Active'?'ok':d.now==='Unknown'?'':'bad'}">${esc(d.now)}</span>${d.nowWhy?`<div class="sub">${esc(d.nowWhy)}</div>`:''}</td>
-    <td><select data-dot="${esc(d.dot)}">${CALL.map(c=>`<option${(memory[d.dot]||'Not Called')===c?' selected':''}>${c}</option>`).join('')}</select></td>
-    <td><a href="https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=${encodeURIComponent(d.dot)}" target="_blank" rel="noopener">Open</a></td></tr>`).join('');
+  $('tbl').querySelector('tbody').innerHTML=r.map((d,i)=>`<tr class="lrow">
+    <td class="muted c-n">${i+1}</td>
+    <td class="c-mc"><b>${cp(d.mc)}</b><div class="sub">${cp('DOT '+d.dot,d.dot)}</div>${d.authType==='Broker'?'<span class="chip">Broker</span>':''}${!/^granted$/i.test(d.reason)?`<span class="chip">${esc(d.reason)}</span>`:''}</td>
+    <td class="c-co"><div class="co">${d.name?cp(d.name):'<span class="muted">—</span>'}</div>${d.dba?`<div class="sub">DBA ${esc(d.dba)}</div>`:''}${d.officer?`<div class="sub">${esc(d.officer)}</div>`:''}</td>
+    <td class="c-ph">${telBtn(d.phone||d.cell)}${d.phone?cp(d.phone):''}${d.cell?`<div class="sub">Cell ${cp(d.cell)}</div>`:''}<div class="sub">${d.email?cp(d.email):''}</div></td>
+    <td class="c-loc">${esc(d.city)}${d.state?', '+esc(d.state):''}</td>
+    <td class="num c-pu"><b>${d.pu}</b></td>
+    <td class="c-sz">${esc(d.size)}</td><td class="c-age" style="white-space:nowrap" title="Granted ${fd(d.date)} · ${d.age} days">${ageLabel(d.date)}</td><td class="c-now"><span class="st ${d.now==='Active'?'ok':d.now==='Unknown'?'':'bad'}">${esc(d.now)}</span>${d.nowWhy?`<div class="sub">${esc(d.nowWhy)}</div>`:''}</td>
+    <td class="c-call"><select data-dot="${esc(d.dot)}">${CALL.map(c=>`<option${(memory[d.dot]||'Not Called')===c?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td class="c-safer"><a href="https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=${encodeURIComponent(d.dot)}" target="_blank" rel="noopener"><span class="mlbl">SAFER </span>Open</a></td></tr>`).join('');
   $('count').textContent=`${all.length} match the filters (of ${DATA.length} total)`+(all.length>r.length?` — showing first ${r.length}. Download Excel gets all ${all.length}.`:'');
   $('more').hidden=all.length<=r.length; $('more').textContent=`Load ${Math.min(PAGE,all.length-r.length)} more`;
   $('pager').textContent=`Showing ${r.length} of ${all.length}`+(all.length>r.length?' · scroll down for more':'');
@@ -897,6 +933,13 @@ $('csv').onclick=()=>{
 };
 $('go').onclick=run;
 $('more').onclick=()=>{shown+=PAGE;render()};
+/*m*/
+// phones: tables are cards and the page itself scrolls, so load more near the bottom of the page
+window.addEventListener('scroll',()=>{if(!matchMedia('(max-width:760px)').matches)return;
+  if(window.innerHeight+window.scrollY<document.body.scrollHeight-600)return;
+  const tw=$('tw'),lw=$('lvWrap');
+  if(tw&&tw.offsetParent&&!$('more').hidden){shown+=PAGE;render()}
+  else if(lw&&lw.offsetParent)lw.dispatchEvent(new Event('scroll'));},{passive:true});
 $('tw').addEventListener('scroll',e=>{const t=e.target; if(!$('more').hidden && t.scrollTop+t.clientHeight>t.scrollHeight-200){shown+=PAGE;render()}});
 $('fAge').addEventListener('change',()=>{$('fAgeCustom').hidden=$('fAge').value!=='custom'});
 ['fAgeMin','fAgeMax'].forEach(id=>$(id).addEventListener('input',()=>{shown=PAGE;render()}));
@@ -1092,7 +1135,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-16';
+const APP_VERSION='2026.11.25-17';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
@@ -1230,13 +1273,13 @@ function renderStats(){const s=stats(cur.leads);$('lvBar').style.width=s.pct+'%'
   $('lvNums').innerHTML=`<b>${s.called.toLocaleString()} of ${s.total.toLocaleString()} called</b><span>${s.pct}% done · ${(s.total-s.called).toLocaleString()} left</span>`;$('lvChips').innerHTML=chipRow(s.c)}
 function renderList(){renderStats();const F=$('lvFilter').value,q=$('lvQ').value.trim().toLowerCase();
   const rows=cur.leads.map((d,i)=>({d,i})).filter(({d})=>(!F||d.status===F)&&(!q||[d.name,d.dba,d.mc,d.dot,d.phone,d.cell,d.email,d.city].join(' ').toLowerCase().includes(q)));
-  $('lvBody').innerHTML=rows.slice(0,lvShown).map(({d,i})=>`<tr id="lv${i}" class="${d.status==='Not Called'?'':'done'}"><td class="muted">${i+1}</td>
-   <td><b>${cp(d.mc)}</b><div class="sub">${cp('DOT '+d.dot,d.dot)}</div></td>
-   <td><div class="co">${d.name?cp(d.name):'<span class="muted">—</span>'}</div>${d.dba?`<div class="sub">DBA ${esc(d.dba)}</div>`:''}${d.officer?`<div class="sub">${esc(d.officer)}</div>`:''}</td>
-   <td>${d.phone?cp(d.phone):''}${d.cell?`<div class="sub">Cell ${cp(d.cell)}</div>`:''}<div class="sub">${d.email?cp(d.email):''}</div></td>
-   <td>${esc(d.city)}${d.state?', '+esc(d.state):''}</td><td class="num"><b>${d.pu??''}</b></td>
-   <td><select data-i="${i}">${CALL.map(c=>`<option${c===d.status?' selected':''}>${c}</option>`).join('')}</select></td>
-   <td><input class="note" data-n="${i}" value="${esc(d.note)}" placeholder="Add note…"></td><td class="muted" style="white-space:nowrap">${esc(when(d.last))}</td></tr>`).join('');
+  $('lvBody').innerHTML=rows.slice(0,lvShown).map(({d,i})=>`<tr id="lv${i}" class="lrow ${d.status==='Not Called'?'':'done'}"><td class="muted c-n">${i+1}</td>
+   <td class="c-mc"><b>${cp(d.mc)}</b><div class="sub">${cp('DOT '+d.dot,d.dot)}</div></td>
+   <td class="c-co"><div class="co">${d.name?cp(d.name):'<span class="muted">—</span>'}</div>${d.dba?`<div class="sub">DBA ${esc(d.dba)}</div>`:''}${d.officer?`<div class="sub">${esc(d.officer)}</div>`:''}</td>
+   <td class="c-ph">${telBtn(d.phone||d.cell)}${d.phone?cp(d.phone):''}${d.cell?`<div class="sub">Cell ${cp(d.cell)}</div>`:''}<div class="sub">${d.email?cp(d.email):''}</div></td>
+   <td class="c-loc">${esc(d.city)}${d.state?', '+esc(d.state):''}</td><td class="num c-pu"><b>${d.pu??''}</b></td>
+   <td class="c-call"><select data-i="${i}">${CALL.map(c=>`<option${c===d.status?' selected':''}>${c}</option>`).join('')}</select></td>
+   <td class="c-note"><input class="note" data-n="${i}" value="${esc(d.note)}" placeholder="Add note…"></td><td class="muted c-last" style="white-space:nowrap">${esc(when(d.last))}</td></tr>`).join('');
   $('lvShown').textContent=`Showing ${Math.min(lvShown,rows.length).toLocaleString()} of ${rows.length.toLocaleString()}`}
 function jumpTo(i){if(i<0)return toast('Every lead in this list has been called 🎉');const r=$('lv'+i);if(!r)return;
   $('lvWrap').scrollTop=r.offsetTop-60;r.classList.add('here');r.scrollIntoView({block:'center'});toast(`Continuing at lead #${(i+1).toLocaleString()}`)}
