@@ -332,6 +332,7 @@ input.note{width:190px;padding:5px 7px;border:1px solid var(--line);border-radiu
       <p class="lnote">Free account. Your saved lists stay on this computer.</p>
     </form>
   </div>
+  <div id="captcha" style="display:flex;justify-content:center;margin-top:12px"></div>
   <p id="aMsg"></p>
 </div></div>
 <div class="modal" id="pwModal" hidden><form class="mbox" id="pwForm"><h3>Set a new password</h3><input id="pwNew" type="password" minlength="8" required placeholder="New password (8+ characters)" autocomplete="new-password"><div class="mact"><button class="primary" type="submit">Save password</button></div></form></div>
@@ -989,7 +990,7 @@ $('lkGo').onclick=lookup;
 getJSON(`${API}${CENSUS}.json?$select=count(*) as n`).then(r=>{const v=+r[0].n;if(v)$('recCount').textContent=(v/1e6).toFixed(1).replace(/\.0$/,'')+'M+'}).catch(()=>{}); $('lk').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});
 
 // ---- live update check (works when hosted on the web) ----
-const APP_VERSION='2026.11.25-6';
+const APP_VERSION='2026.11.25-7';
 function checkUpdate(){
   if(!/^https?:/.test(location.protocol)) return;
   xhrJSON('version.json?t='+Date.now(),10000).then(v=>{
@@ -1008,6 +1009,14 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdat
 // ===== Sign-in, saved lists and usage =====
 (function(){
 const SB_URL='https://tjrmfgaknoabduajlvrq.supabase.co', SB_KEY='sb_publishable_HK-4vJd2SdqROZyH8dCDYQ_DGSN-pAa';
+const TS_KEY='0x4AAAAAAGSyhr-qaTUY0CH_'; // Cloudflare Turnstile site key (public). Empty = CAPTCHA off.
+let capTok=null, capId=null;
+function capInit(){ if(!TS_KEY) return; const go=()=>{ if(capId!==null||!window.turnstile) return;
+    capId=turnstile.render('#captcha',{sitekey:TS_KEY,callback:t=>{capTok=t},'expired-callback':()=>{capTok=null},'error-callback':()=>{capTok=null}}); };
+  if(window.turnstile) return go(); const sc=document.createElement('script'); sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; sc.async=true; sc.onload=go; document.head.appendChild(sc); }
+function capNeed(){ if(!TS_KEY) return false; if(capTok) return false; msg('Please complete the “I am human” check below, then try again.'); return true; }
+function capReset(){ capTok=null; if(capId!==null&&window.turnstile) turnstile.reset(capId); }
+const capOpt=()=>TS_KEY?{captchaToken:capTok}:{};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let sb=null, me=null, isAdmin=false, hb=null;
@@ -1024,20 +1033,21 @@ function friendly(e){const m=(e&&e.message)||String(e);
   if(/invalid login/i.test(m)) return 'Wrong email or password.';
   if(/already registered|already exists/i.test(m)) return 'This email already has an account. Use Sign in.';
   if(/not confirmed/i.test(m)) return 'Please confirm your email first (check your inbox).';
+  if(/captcha/i.test(m)) return 'The “I am human” check failed. Please try again.';
   if(/rate limit/i.test(m)) return 'Too many tries. Please wait a few minutes.';
   return m;}
 
-$('inForm').onsubmit=async e=>{e.preventDefault();msg('Signing in…',true);
-  const {error}=await sb.auth.signInWithPassword({email:$('inEmail').value.trim(),password:$('inPass').value});
+$('inForm').onsubmit=async e=>{e.preventDefault();if(capNeed())return;msg('Signing in…',true);
+  const {error}=await sb.auth.signInWithPassword({email:$('inEmail').value.trim(),password:$('inPass').value,options:capOpt()});capReset();
   if(error) return msg(friendly(error)); track('login');};
-$('upForm').onsubmit=async e=>{e.preventDefault();msg('Creating your account…',true);
+$('upForm').onsubmit=async e=>{e.preventDefault();if(capNeed())return;msg('Creating your account…',true);
   const {data,error}=await sb.auth.signUp({email:$('upEmail').value.trim(),password:$('upPass').value,
-    options:{data:{full_name:$('upName').value.trim()},emailRedirectTo:location.origin+location.pathname}});
+    options:{data:{full_name:$('upName').value.trim()},emailRedirectTo:location.origin+location.pathname,...capOpt()}});capReset();
   if(error) return msg(friendly(error));
   if(!data.session) return msg('Account created. Check your email to confirm, then sign in.',true);
   track('login');};
-$('forgot').onclick=async()=>{const em=$('inEmail').value.trim(); if(!em) return msg('Type your email above first, then click Forgot password.');
-  const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});
+$('forgot').onclick=async()=>{const em=$('inEmail').value.trim(); if(!em) return msg('Type your email above first, then click Forgot password.');if(capNeed())return;
+  const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname,...capOpt()});capReset();
   msg(error?friendly(error):'If that email has an account, a reset link is on its way.',!error);};
 $('pwForm').onsubmit=async e=>{e.preventDefault();const {error}=await sb.auth.updateUser({password:$('pwNew').value});
   if(error) return toast(friendly(error)); $('pwModal').hidden=true; toast('Password updated');};
@@ -1054,7 +1064,7 @@ async function enter(user){
   $('tabAdmin').hidden=!isAdmin;
   await loadLists();
 }
-function leave(){me=null;isAdmin=false;clearInterval(hb);LISTS=[];$('who').hidden=true;$('tabAdmin').hidden=true;
+function leave(){capInit();me=null;isAdmin=false;clearInterval(hb);LISTS=[];$('who').hidden=true;$('tabAdmin').hidden=true;
   $('aLoading').hidden=true;$('aForms').hidden=false;$('auth').hidden=false;$('inPass').value='';showView('findView');}
 
 // ---- views / tabs ----
